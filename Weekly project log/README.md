@@ -1,5 +1,5 @@
 # Overview
-This repositry is ?????? and the purpose of this repositry is???
+This repositry is a weekly log and accountability for work towards the semester project and the purpose of this repository is to serve as a table of contents for your projects throughout the semester. Each additional week's markdown file will be referenced in the table of contents along with a brief description of whats included
 
 # Table of Content
 | Weeks   | What we did                                                                             |
