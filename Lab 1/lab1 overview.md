@@ -16,7 +16,7 @@ Part 3
 2. Level of difficulty of the assignment
    * Medium
 3. What aspect did I find most difficult
-  * Learning new Syntax
+   * Learning new Syntax
 4. Comfort level with course content
-  * I feel comfortable with the course content, but it looks to be mostly time-commitment-based, which is my only worry.
+   * I feel comfortable with the course content, but it looks to be mostly time-commitment-based, which is my only worry.
 5. N/A
