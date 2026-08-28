@@ -2,4 +2,4 @@
 - 8/26/26 Ranked the topics with Ayan and Emmett (In person meeting)
 - 8/26/26 Created a group chat with Ayan and Emmett
 - 8/27/26 Created added Joseph to the group chat
-- 8/28/26 Draft of the stakeholder email was sent (no dates finalized yet)
+- 8/28/26 Draft of the stakeholder email was sent (no dates finalized yet)<img width="454" height="404" alt="image" src="https://github.com/user-attachments/assets/673195ec-4d44-4fc7-8519-892e5bfd9861" />
