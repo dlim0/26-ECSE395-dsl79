@@ -1,0 +1,3 @@
+- 8/31/26 Finalized the meeting with Don Fong to be from 6:00-7:00 Thursday and sent him the subsequent message
+- 8/31/26 Signed the team contract and designated the roles to the corresponding members Ayan (Group Leader), Emmett (Document Manager), Joseph (Secretary), Daniel (Procurement Lead)
+- 9/2/26 Decided that our weekly meetings would occur on Fridays 1-2 PM
