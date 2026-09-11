@@ -1,0 +1,4 @@
+- 9/6/26 Coordinated the completion of the Needfinding assignment and split the work accordingly
+- 9/6/26 Collaborated to categorize Don Fong's needs using Figma
+- 9/6/26 Submitted the completed Needfinding assignment
+- 9/11/26 Had the first group meeting  
