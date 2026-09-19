@@ -4,18 +4,20 @@
 
 // Define the servo and the pin it is connected to, what is your servo pin?
 Servo myServo;
-const int servoPin = 0;
+const int servoPin = 25;
 
 // Define the minimum and maximum pulse widths for the servo
 const int minPulseWidth = 500; // 0.5 ms
 const int maxPulseWidth = 2500; // 2.5 ms
 
 void setup() {
-  // Attach the servo to the specified pin and set its pulse width range
-  myServo.attach(servoPin, minPulseWidth, maxPulseWidth);
+  Serial.begin(115200);
 
   // Set the PWM frequency for the servo
   myServo.setPeriodHertz(50); // Standard 50Hz servo
+
+  // Attach the servo to the specified pin and set its pulse width range
+  myServo.attach(servoPin, minPulseWidth, maxPulseWidth);
 }
 
 void loop() {
@@ -26,16 +28,26 @@ void loop() {
     // map(angle, min angle, max angle, min pulse width, max pulse width)
     pulseWidth = map(angle, 0, 180, minPulseWidth, maxPulseWidth);
     myServo.writeMicroseconds(pulseWidth);
+
+    //displays the angle to the serial monitor
+    Serial.print("Angle: ");
+    Serial.println(angle);
+
     delay(15);
   }
 
   // Rotate the servo from 180 to 0 degrees
-  for (int angle = 180; angle <= 0; angle--) {
+  for (int angle = 180; angle >= 0; angle--) {
     int pulseWidth;
     // the map function is a puction that maps 0 degrees to 500 pulse width, and 180 degrees to 2500 pulse width
     // map(angle, min angle, max angle, min pulse width, max pulse width)
     pulseWidth = map(angle, 0, 180, minPulseWidth, maxPulseWidth);
     myServo.writeMicroseconds(pulseWidth);
+
+    // displays the angle to the serial monitor
+    Serial.print("Angle: ");
+    Serial.println(angle);
+
     delay(15);
   }
 }
