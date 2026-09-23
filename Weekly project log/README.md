@@ -5,4 +5,7 @@ This repositry is a weekly log and accountability for work towards the semester 
 | Weeks   | What we did                                                                             |
 | ------- | --------------------------------------------------------------------------------------- |
 | Week 1  | Figuring out Github                                                                     |
-| Week #  | ...and so on                                                                            |
+| Week 2  | ESP32 Basics                                                                     |
+| Week 3  | Playing with Sensors                                                                           |
+| Week 4  | Playing with Actuators                                                                           |
+| Week 5  | ...and so on                                                                            |
