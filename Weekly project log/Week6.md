@@ -1,0 +1,4 @@
+- 9/28/26 Delegated roles for the Concept Selection & Gantt Chart Assignment
+- 9/28/26 Finished the Gantt Chart Assignment and selected the camera AI detection model for our "final" selection
+- 10/2/26 Met with the group to discuss prototyping
+- 10/2/26 Delegated work for System Architecture and Prototype Plan
