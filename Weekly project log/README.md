@@ -9,3 +9,7 @@ This repositry is a weekly log and accountability for work towards the semester 
 | Week 3  | Playing with Sensors and Learning Standards                                                                           |
 | Week 4  | Playing with Actuators & Needfinding                                                                           |
 | Week 5  | Smart System Integration and Presenting Ideas to Stakeholder                                                                            |
+| Week 6  | Pre-planning Prototypes                                                                            |
+| Week 7 | Reapproach to Prototypes                                                                            |
+| Week 8  | Prototypes 1, 2, and 3                                                                            |
+
