@@ -1,0 +1,4 @@
+- 10/12/26 Finished Verification and Validation plan assignment and split up the work accordingly
+- 10/14/26 Going through prototype 2 and 3 and decided to add more verfication criteria to test after planning prototype 3 and making prototype 3
+- 10/14/26 Receieved Camera Module, Rechargable Battery, and ESP32 S3 Variant opening up previously unavailable specs for us to test
+- 10/16/26 Personally left for Fall Break early so wasn't present for team meeting and wasn't present for prototype check with Dr. Fu
