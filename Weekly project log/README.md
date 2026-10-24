@@ -12,4 +12,6 @@ This repositry is a weekly log and accountability for work towards the semester 
 | Week 6  | Pre-planning Prototypes                                                                            |
 | Week 7 | Reapproach to Prototypes                                                                            |
 | Week 8  | Prototypes 1, 2, and 3                                                                            |
+| Week 9  | Prototypes 3 Continued and Presentation Prep                                                                           |
+
 
