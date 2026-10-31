@@ -1,0 +1,13 @@
+{
+  "label": "five-percent-live",
+  "photos_saved": 4,
+  "measured_frames": 4,
+  "max_area_percent": 2.812,
+  "large_frames": 0,
+  "pir_triggers": 1,
+  "deterrent_on_events": 0,
+  "deterrent_off_events": 0,
+  "last_status": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=0 camera=STANDBY",
+  "device_errors": [],
+  "errors": []
+}

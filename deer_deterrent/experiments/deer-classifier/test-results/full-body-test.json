@@ -1,0 +1,178 @@
+{
+  "scene": "User-confirmed full-body deer image; no independent framing verification",
+  "frames": 33,
+  "first_frame": 275,
+  "last_frame": 307,
+  "maximum": 0.3775,
+  "mean": 0.216330303030303,
+  "median": 0.1824,
+  "confirmed_frames": 0,
+  "threshold": 0.85,
+  "observations": [
+    {
+      "frame": 275,
+      "score": 0.3208,
+      "present": 0
+    },
+    {
+      "frame": 276,
+      "score": 0.2227,
+      "present": 0
+    },
+    {
+      "frame": 277,
+      "score": 0.1192,
+      "present": 0
+    },
+    {
+      "frame": 278,
+      "score": 0.1824,
+      "present": 0
+    },
+    {
+      "frame": 279,
+      "score": 0.3208,
+      "present": 0
+    },
+    {
+      "frame": 280,
+      "score": 0.3208,
+      "present": 0
+    },
+    {
+      "frame": 281,
+      "score": 0.1824,
+      "present": 0
+    },
+    {
+      "frame": 282,
+      "score": 0.3775,
+      "present": 0
+    },
+    {
+      "frame": 283,
+      "score": 0.3775,
+      "present": 0
+    },
+    {
+      "frame": 284,
+      "score": 0.3208,
+      "present": 0
+    },
+    {
+      "frame": 285,
+      "score": 0.3208,
+      "present": 0
+    },
+    {
+      "frame": 286,
+      "score": 0.1824,
+      "present": 0
+    },
+    {
+      "frame": 287,
+      "score": 0.3208,
+      "present": 0
+    },
+    {
+      "frame": 288,
+      "score": 0.2689,
+      "present": 0
+    },
+    {
+      "frame": 289,
+      "score": 0.0,
+      "present": 0
+    },
+    {
+      "frame": 290,
+      "score": 0.1192,
+      "present": 0
+    },
+    {
+      "frame": 291,
+      "score": 0.2689,
+      "present": 0
+    },
+    {
+      "frame": 292,
+      "score": 0.1192,
+      "present": 0
+    },
+    {
+      "frame": 293,
+      "score": 0.1824,
+      "present": 0
+    },
+    {
+      "frame": 294,
+      "score": 0.0953,
+      "present": 0
+    },
+    {
+      "frame": 295,
+      "score": 0.2689,
+      "present": 0
+    },
+    {
+      "frame": 296,
+      "score": 0.1192,
+      "present": 0
+    },
+    {
+      "frame": 297,
+      "score": 0.2227,
+      "present": 0
+    },
+    {
+      "frame": 298,
+      "score": 0.2689,
+      "present": 0
+    },
+    {
+      "frame": 299,
+      "score": 0.1824,
+      "present": 0
+    },
+    {
+      "frame": 300,
+      "score": 0.1824,
+      "present": 0
+    },
+    {
+      "frame": 301,
+      "score": 0.2689,
+      "present": 0
+    },
+    {
+      "frame": 302,
+      "score": 0.2227,
+      "present": 0
+    },
+    {
+      "frame": 303,
+      "score": 0.1824,
+      "present": 0
+    },
+    {
+      "frame": 304,
+      "score": 0.148,
+      "present": 0
+    },
+    {
+      "frame": 305,
+      "score": 0.1824,
+      "present": 0
+    },
+    {
+      "frame": 306,
+      "score": 0.148,
+      "present": 0
+    },
+    {
+      "frame": 307,
+      "score": 0.1192,
+      "present": 0
+    }
+  ]
+}

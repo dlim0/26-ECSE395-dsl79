@@ -1,0 +1,10 @@
+{
+  "label": "initial-check",
+  "photos_saved": 12,
+  "measured_frames": 63,
+  "max_area_percent": 76.354,
+  "large_frames": 61,
+  "errors": [
+    "Final photo transfer incomplete; discarded"
+  ]
+}

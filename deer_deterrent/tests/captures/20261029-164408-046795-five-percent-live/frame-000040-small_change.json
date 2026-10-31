@@ -1,0 +1,24 @@
+{
+  "frame": 40,
+  "state": "SMALL_CHANGE",
+  "area_percent": 0.979,
+  "cutoff_percent": 5.0,
+  "changed_pixels": 47,
+  "brightness_shift": 0,
+  "bbox": [
+    9,
+    1,
+    7,
+    8
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 6923,
+  "fnv1a": "2f3c07eb",
+  "host_received": "2026-10-29T16:44:48.519329-04:00",
+  "test_label": "five-percent-live"
+}

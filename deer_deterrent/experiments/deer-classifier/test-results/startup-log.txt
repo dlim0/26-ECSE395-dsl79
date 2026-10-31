@@ -1,0 +1,182 @@
+I (349) esp_image: segment 4: paddr=001c7cdc vaddr=40379144 sizeI (2897) cam_hal: PSRAM DMA mode disabled
+I (2897) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15
+I (2897) cam_hal: Allocating 15360 Byte frame buffer in PSRAM
+I (2897) cam_hal: cam config ok
+I (2907) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4
+I (2907) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz
+MODEL_SELFTEST SKIP
+W (3167) dl::Model: minimize() will delete unused inference variables, breaking model testing/debugging.
+INFERENCE_SELFTEST PASS score=0.0000
+READY model_bytes=499712 threshold=0.8500 window=3 required=2 width=224 height=224
+FRAME n=1 score=0.0000 present=0 capture_ms=0.17 decode_ms=24.81 infer_ms=378.48 total_ms=403.46 psram_free=1662572
+FRAME n=2 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.72 infer_ms=378.21 total_ms=403.23 psram_free=1662572
+FRAME n=3 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.68 infer_ms=378.22 total_ms=403.20 psram_free=1662572
+FRAME n=4 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.70 infer_ms=378.25 total_ms=403.25 psram_free=1662572
+FRAME n=5 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.72 infer_ms=378.11 total_ms=403.13 psram_free=1662572
+FRAME n=6 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.72 infer_ms=378.24 total_ms=403.26 psram_free=1662572
+FRAME n=7 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.71 infer_ms=378.17 total_ms=403.18 psram_free=1662572
+FRAME n=8 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.71 infer_ms=378.22 total_ms=403.22 psram_free=1662572
+FRAME n=9 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.69 infer_ms=378.19 total_ms=403.18 psram_free=1662572
+I (349) esp_image: segment 4: paddr=001c7cdc vaddr=40379144 sizeI (605) esp_psram: SPI SRAM memory test OK
+I (613) cpu_start: Pro cpu start user code
+I (614) cpu_start: cpu freq: 160000000 Hz
+I (614) app_init: Application information:
+I (614) app_init: Project name:     deer_camera_smoke
+I (614) app_init: App version:      1
+I (614) app_init: Compile time:     Oct 29 2026 16:01:20
+I (615) app_init: ELF file SHA256:  02e7566a7...
+I (615) app_init: ESP-IDF:          5.4.2
+I (615) efuse_init: Min chip rev:     v0.0
+I (615) efuse_init: Max chip rev:     v0.99 
+I (615) efuse_init: Chip rev:         v0.2
+I (616) heap_init: Initializing. RAM available for dynamic allocation:
+I (616) heap_init: At 3FC9E638 len 0004B0D8 (300 KiB): RAM
+I (616) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (616) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (616) heap_init: At 600FE01C len 00001FCC (7 KiB): RTCRAM
+I (617) esp_psram: Adding pool of 2048K of PSRAM memory to heap allocator
+I (618) spi_flash: detected chip: generic
+I (618) spi_flash: flash io: dio
+I (618) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (619) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (620) main_task: Started on CPU0
+I (630) esp_psram: Reserving pool of 64K of internal memory for DMA/internal allocations
+I (630) main_task: Calling app_main()
+BOOT deer_camera_smoke model_bytes=499712 sha256=f4baa40014b3b5476e05e5007ab6e83a1a19bdc680c12dba86761841e02fc450
+GATE_SELFTEST PASS
+I (2150) s3 ll_cam: DMA Channel=0
+I (2150) cam_hal: cam init ok
+I (2150) sccb-ng: pin_sda 1 pin_scl 41
+I (2150) sccb-ng: sccb_i2c_port=1
+I (2150) gpio: GPIO[37]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 
+I (2180) ov3660: Mismatch PID=0x5640
+I (2180) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00
+I (2180) camera: Detected OV5640 camera
+I (2180) camera: Detected camera at address=0x3c
+I (2860) cam_hal: PSRAM DMA mode disabled
+I (2860) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15
+I (2860) cam_hal: Allocating 15360 Byte frame buffer in PSRAM
+I (2860) cam_hal: cam config ok
+I (2870) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4
+I (2870) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz
+MODEL_SELFTEST SKIP
+W (3130) dl::Model: minimize() will delete unused inference variables, breaking model testing/debugging.
+INFERENCE_SELFTEST PASS score=0.0000
+READY model_bytes=499712 threshold=0.8500 window=3 required=2 width=224 height=224
+FRAME n=1 score=0.0000 present=0 capture_ms=0.17 decode_ms=24.80 infer_ms=378.38 total_ms=403.35 psram_free=1662572
+FRAME n=2 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.72 infer_ms=378.13 total_ms=403.15 psram_free=1662572
+FRAME n=3 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.68 infer_ms=378.24 total_ms=403.21 psram_free=1662572
+FRAME n=4 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.67 infer_ms=378.17 total_ms=403.14 psram_free=1662572
+FRAME n=5 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.69 infer_ms=378.21 total_ms=403.19 psram_free=1662572
+FRAME n=6 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.71 infer_ms=378.16 total_ms=403.17 psram_free=1662572
+FRAME n=7 score=0.0953 present=0 capture_ms=0.30 decode_ms=24.73 infer_ms=378.34 total_ms=403.37 psram_free=1662572
+FRAME n=8 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.70 infer_ms=378.34 total_ms=403.33 psram_free=1662572
+FRAME n=9 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.72 infer_ms=378.17 total_ms=403.18 psram_free=1662572
+FRAME n=10 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.72 infer_ms=378.25 total_ms=403.26 psram_free=1662572
+FRAME n=11 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.71 infer_ms=378.20 total_ms=403.21 psram_free=1662572
+FRAME n=12 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.73 infer_ms=378.16 total_ms=403.18 psram_free=1662572
+FRAME n=13 score=0.1192 present=0 capture_ms=0.30 decode_ms=24.69 infer_ms=378.50 total_ms=403.49 psram_free=1662572
+FRAME n=14 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.69 infer_ms=378.14 total_ms=403.12 psram_free=1662572
+FRAME n=15 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.73 infer_ms=378.21 total_ms=403.24 psram_free=1662572
+FRAME n=16 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.72 infer_ms=378.14 total_ms=403.16 psram_free=1662572
+FRAME n=17 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.76 infer_ms=378.17 total_ms=403.23 psram_free=1662572
+FRAME n=18 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.69 infer_ms=378.33 total_ms=403.31 psram_free=1662572
+FRAME n=19 score=0.0000 present=0 capture_ms=0.30 decode_ms=24.7FRAME n=51 score=0.0000 present=0 capture_ms=0.34 decode_ms=26.97 infer_ms=378.65 total_ms=405.96 psram_free=1662572
+FRAME n=52 score=0.0000 present=0 capture_ms=0.33 decode_ms=27.01 infer_ms=378.76 total_ms=406.11 psram_free=1662572
+FRAME n=53 score=0.0000 present=0 capture_ms=0.30 decode_ms=27.16 infer_ms=378.88 total_ms=406.34 psram_free=1662572
+FRAME n=54 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.55 infer_ms=378.77 total_ms=406.68 psram_free=1662572
+FRAME n=55 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.61 infer_ms=378.90 total_ms=406.86 psram_free=1662572
+FRAME n=56 score=0.1480 present=0 capture_ms=0.36 decode_ms=27.55 infer_ms=378.89 total_ms=406.79 psram_free=1662572
+FRAME n=57 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.51 infer_ms=378.84 total_ms=406.70 psram_free=1662572
+FRAME n=58 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.54 infer_ms=378.75 total_ms=406.64 psram_free=1662572
+FRAME n=59 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.55 infer_ms=378.72 total_ms=406.62 psram_free=1662572
+FRAME n=60 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.54 infer_ms=378.87 total_ms=406.77 psram_free=1662572
+FRAME n=61 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.57 infer_ms=378.72 total_ms=406.64 psram_free=1662572
+FRAME n=62 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.52 infer_ms=378.88 total_ms=406.75 psram_free=1662572
+FRAME n=63 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.50 infer_ms=378.72 total_ms=406.57 psram_free=1662572
+FRAME n=64 score=0.0000 present=0 capture_ms=0.35 decode_ms=27.55 infer_ms=378.84 total_ms=406.74 psram_free=1662572
+FRAME n=65 score=0.0000 present=0 capture_ms=0.34 decode_ms=27.63 infer_ms=378.83 total_ms=406.80 psram_free=1662572
+FRAME n=66 score=0.1480 present=0 capture_ms=0.34 decode_ms=27.59 infer_ms=378.87 total_ms=406.80 psram_free=1662572
+FRAME n=67 score=0.0000 present=0 capture_ms=0.34 decode_ms=27.55 infer_ms=378.94 total_ms=406.84 psram_free=1662572
+FRAME n=68 score=0.0953 present=0 capture_ms=0.32 decode_ms=27.71 infer_ms=378.77 total_ms=406.80 psram_free=1662572
+FRAME n=69 score=0.0000 present=0 capture_ms=0.34 decode_ms=27.62 infer_ms=378.91 total_ms=406.88 psram_free=1662572
+FRAME n=70 score=0.1480 present=0 capture_ms=0.34 decode_ms=27.64 infer_ms=378.97 total_ms=406.95 psram_free=1662572
+FRAME n=71 score=0.1824 present=0 capture_ms=0.34 decode_ms=27.60 infer_ms=379.04 total_ms=406.98 psram_free=1662572
+FRAME n=72 score=0.1480 present=0 capture_ms=0.36 decode_ms=27.46 infer_ms=378.95 total_ms=406.77 psram_free=1662572
+FRAME n=73 score=0.0000 present=0 capture_ms=0.14 decode_ms=26.68 infer_ms=378.69 total_ms=405.52 psram_free=1662572
+FRAME n=74 score=0.0000 present=0 capture_ms=0.34 decode_ms=26.98 infer_ms=378.62 total_ms=405.94 psram_free=1662572
+FRAME n=75 score=0.0000 present=0 capture_ms=0.27 decode_ms=26.79 infer_ms=378.70 total_ms=405.76 psram_free=1662572
+FRAME n=76 score=0.0000 present=0 capture_ms=0.30 decode_ms=27.23 infer_ms=378.77 total_ms=406.29 psram_free=1662572
+FRAME n=77 score=0.0000 present=0 capture_ms=0.29 decode_ms=27.22 infer_ms=378.71 total_ms=406.22 psram_free=1662572
+FRAME n=78 score=0.0000 present=0 capture_ms=0.28 decode_ms=27.29 infer_ms=378.70 total_ms=406.27 psram_free=1662572
+FRAME n=79 score=0.0000 present=0 capture_ms=0.29 decode_ms=27.28 infer_ms=378.75 total_ms=406.32 psram_free=1662572
+FRAME n=80 score=0.0000 present=0 capture_ms=0.28 decode_ms=27.35 infer_ms=378.71 total_ms=406.33 psram_free=1662572
+FRAME n=81 score=0.0000 present=0 capture_ms=0.29 decode_ms=27.30 infer_ms=378.72 total_ms=406.31 psram_free=1662572
+FRAME n=82 score=0.0000 present=0 capture_ms=0.29 decode_ms=27.25 infer_ms=378.67 total_ms=406.21 psram_free=1662572
+FRAME n=83 score=0.0000 present=0 capture_ms=0.30 decode_ms=27.20 infer_ms=378.58 total_ms=406.08 psram_free=1662572
+FRAME n=84 score=0.0000 present=0 capture_ms=0.29 decode_ms=27.3FRAME n=275 score=0.3208 present=0 capture_ms=0.33 decode_ms=27.71 infer_ms=379.27 total_ms=407.30 psram_free=1662572
+FRAME n=276 score=0.2227 present=0 capture_ms=0.34 decode_ms=27.61 infer_ms=379.14 total_ms=407.10 psram_free=1662572
+FRAME n=277 score=0.1192 present=0 capture_ms=0.37 decode_ms=26.79 infer_ms=378.99 total_ms=406.15 psram_free=1662572
+FRAME n=278 score=0.1824 present=0 capture_ms=0.36 decode_ms=27.51 infer_ms=379.01 total_ms=406.88 psram_free=1662572
+FRAME n=279 score=0.3208 present=0 capture_ms=0.31 decode_ms=27.87 infer_ms=379.26 total_ms=407.45 psram_free=1662572
+FRAME n=280 score=0.3208 present=0 capture_ms=0.30 decode_ms=27.87 infer_ms=379.21 total_ms=407.39 psram_free=1662572
+FRAME n=281 score=0.1824 present=0 capture_ms=0.30 decode_ms=27.93 infer_ms=379.17 total_ms=407.40 psram_free=1662572
+FRAME n=282 score=0.3775 present=0 capture_ms=0.29 decode_ms=27.96 infer_ms=379.20 total_ms=407.46 psram_free=1662572
+FRAME n=283 score=0.3775 present=0 capture_ms=0.30 decode_ms=27.94 infer_ms=379.09 total_ms=407.33 psram_free=1662572
+FRAME n=284 score=0.3208 present=0 capture_ms=0.29 decode_ms=27.97 infer_ms=379.29 total_ms=407.55 psram_free=1662572
+FRAME n=285 score=0.3208 present=0 capture_ms=0.30 decode_ms=27.88 infer_ms=379.27 total_ms=407.45 psram_free=1662572
+FRAME n=286 score=0.1824 present=0 capture_ms=0.34 decode_ms=27.67 infer_ms=379.10 total_ms=407.11 psram_free=1662572
+FRAME n=287 score=0.3208 present=0 capture_ms=0.34 decode_ms=27.66 infer_ms=379.22 total_ms=407.22 psram_free=1662572
+FRAME n=288 score=0.2689 present=0 capture_ms=0.32 decode_ms=27.75 infer_ms=378.98 total_ms=407.05 psram_free=1662572
+FRAME n=289 score=0.0000 present=0 capture_ms=0.30 decode_ms=27.44 infer_ms=378.79 total_ms=406.52 psram_free=1662572
+FRAME n=290 score=0.1192 present=0 capture_ms=0.35 decode_ms=27.57 infer_ms=379.06 total_ms=406.99 psram_free=1662572
+FRAME n=291 score=0.2689 present=0 capture_ms=0.32 decode_ms=27.80 infer_ms=379.19 total_ms=407.30 psram_free=1662572
+FRAME n=292 score=0.1192 present=0 capture_ms=0.32 decode_ms=27.78 infer_ms=379.09 total_ms=407.18 psram_free=1662572
+FRAME n=293 score=0.1824 present=0 capture_ms=0.33 decode_ms=27.70 infer_ms=379.08 total_ms=407.11 psram_free=1662572
+FRAME n=294 score=0.0953 present=0 capture_ms=0.33 decode_ms=27.71 infer_ms=379.07 total_ms=407.11 psram_free=1662572
+FRAME n=295 score=0.2689 present=0 capture_ms=0.34 decode_ms=27.65 infer_ms=379.21 total_ms=407.20 psram_free=1662572
+FRAME n=296 score=0.1192 present=0 capture_ms=0.32 decode_ms=27.77 infer_ms=379.11 total_ms=407.19 psram_free=1662572
+FRAME n=297 score=0.2227 present=0 capture_ms=0.31 decode_ms=27.81 infer_ms=379.17 total_ms=407.29 psram_free=1662572
+FRAME n=298 score=0.2689 present=0 capture_ms=0.32 decode_ms=27.77 infer_ms=379.05 total_ms=407.15 psram_free=1662572
+FRAME n=299 score=0.1824 present=0 capture_ms=0.32 decode_ms=27.73 infer_ms=379.16 total_ms=407.21 psram_free=1662572
+FRAME n=300 score=0.1824 present=0 capture_ms=0.31 decode_ms=27.81 infer_ms=379.05 total_ms=407.17 psram_free=1662572
+FRAME n=301 score=0.2689 present=0 capture_ms=0.32 decode_ms=27.83 infer_ms=379.13 total_ms=407.28 psram_free=1662572
+FRAME n=302 score=0.2227 present=0 capture_ms=0.31 decode_ms=27.81 infer_ms=379.17 total_ms=407.29 psram_free=1662572
+FRAME n=303 score=0.1824 present=0 capture_ms=0.31 decode_ms=27.85 infer_ms=379.12 total_ms=407.28 psram_free=1662572
+FRAME n=304 score=0.1480 present=0 capture_ms=0.31 decode_ms=27.79 infer_ms=379.27 total_ms=407.38 psram_free=1662572
+FRAME n=305 score=0.1824 present=0 capture_ms=0.30 decode_ms=27.87 infer_ms=379.20 total_ms=407.37 psram_free=1662572
+FRAME n=306 score=0.1480 present=0 capture_ms=0.31 decode_ms=27.86 infer_ms=378.97 total_ms=407.14 psram_free=1662572
+FRAME n=307 score=0.1192 present=0 capture_ms=0.36 decode_ms=27.55 infer_ms=379.18 total_ms=407.09 psram_free=1662572
+FRAME n=308 score=0.1824 present=0 capture_ms=0.31 decode_ms=27.FRAME n=409 score=0.0000 present=0 capture_ms=0.37 decode_ms=28.08 infer_ms=378.87 total_ms=407.32 psram_free=1662572
+FRAME n=410 score=0.1824 present=0 capture_ms=0.27 decode_ms=28.10 infer_ms=379.06 total_ms=407.43 psram_free=1662572
+FRAME n=411 score=0.0000 present=0 capture_ms=0.36 decode_ms=28.16 infer_ms=378.87 total_ms=407.39 psram_free=1662572
+FRAME n=412 score=0.1824 present=0 capture_ms=0.27 decode_ms=28.07 infer_ms=379.16 total_ms=407.50 psram_free=1662572
+FRAME n=413 score=0.1480 present=0 capture_ms=0.36 decode_ms=28.10 infer_ms=378.99 total_ms=407.46 psram_free=1662572
+FRAME n=414 score=0.1480 present=0 capture_ms=0.36 decode_ms=28.12 infer_ms=379.08 total_ms=407.56 psram_free=1662572
+FRAME n=415 score=0.0000 present=0 capture_ms=0.28 decode_ms=28.06 infer_ms=378.90 total_ms=407.23 psram_free=1662572
+FRAME n=416 score=0.1480 present=0 capture_ms=0.27 decode_ms=28.09 infer_ms=379.12 total_ms=407.49 psram_free=1662572
+FRAME n=417 score=0.0000 present=0 capture_ms=0.28 decode_ms=28.01 infer_ms=378.80 total_ms=407.10 psram_free=1662572
+FRAME n=418 score=0.0000 present=0 capture_ms=0.32 decode_ms=27.74 infer_ms=378.75 total_ms=406.82 psram_free=1662572
+FRAME n=419 score=0.0953 present=0 capture_ms=0.31 decode_ms=27.19 infer_ms=378.99 total_ms=406.49 psram_free=1662572
+FRAME n=420 score=0.0000 present=0 capture_ms=0.34 decode_ms=27.01 infer_ms=378.70 total_ms=406.05 psram_free=1662572
+FRAME n=421 score=0.0000 present=0 capture_ms=0.28 decode_ms=26.67 infer_ms=378.72 total_ms=405.67 psram_free=1662572
+FRAME n=422 score=0.0000 present=0 capture_ms=0.37 decode_ms=27.44 infer_ms=378.70 total_ms=406.51 psram_free=1662572
+FRAME n=423 score=0.1192 present=0 capture_ms=0.31 decode_ms=27.04 infer_ms=378.64 total_ms=405.99 psram_free=1662572
+FRAME n=424 score=0.1480 present=0 capture_ms=0.27 decode_ms=27.36 infer_ms=378.93 total_ms=406.56 psram_free=1662572
+FRAME n=425 score=0.0000 present=0 capture_ms=0.31 decode_ms=27.14 infer_ms=378.74 total_ms=406.19 psram_free=1662572
+FRAME n=426 score=0.0000 present=0 capture_ms=0.33 decode_ms=26.98 infer_ms=378.70 total_ms=406.01 psram_free=1662572
+FRAME n=427 score=0.0953 present=0 capture_ms=0.37 decode_ms=26.78 infer_ms=378.92 total_ms=406.06 psram_free=1662572
+FRAME n=428 score=0.1192 present=0 capture_ms=0.27 decode_ms=27.34 infer_ms=378.94 total_ms=406.55 psram_free=1662572
+FRAME n=429 score=0.0000 present=0 capture_ms=0.32 decode_ms=27.72 infer_ms=378.79 total_ms=406.83 psram_free=1662572
+FRAME n=430 score=0.0953 present=0 capture_ms=0.30 decode_ms=27.17 infer_ms=379.01 total_ms=406.48 psram_free=1662572
+FRAME n=431 score=0.2227 present=0 capture_ms=0.37 decode_ms=27.43 infer_ms=379.20 total_ms=406.99 psram_free=1662572
+FRAME n=432 score=0.0000 present=0 capture_ms=0.36 decode_ms=27.45 infer_ms=378.83 total_ms=406.65 psram_free=1662572
+FRAME n=433 score=0.1192 present=0 capture_ms=0.36 decode_ms=27.50 infer_ms=378.81 total_ms=406.67 psram_free=1662572
+FRAME n=434 score=0.1480 present=0 capture_ms=0.37 decode_ms=27.39 infer_ms=379.09 total_ms=406.85 psram_free=1662572
+FRAME n=435 score=0.0953 present=0 capture_ms=0.27 decode_ms=27.39 infer_ms=378.83 total_ms=406.48 psram_free=1662572
+FRAME n=436 score=0.0000 present=0 capture_ms=0.29 decode_ms=27.26 infer_ms=378.78 total_ms=406.33 psram_free=1662572
+FRAME n=437 score=0.1192 present=0 capture_ms=0.28 decode_ms=27.30 infer_ms=378.91 total_ms=406.49 psram_free=1662572
+FRAME n=438 score=0.1192 present=0 capture_ms=0.29 decode_ms=27.26 infer_ms=378.79 total_ms=406.34 psram_free=1662572
+FRAME n=439 score=0.1824 present=0 capture_ms=0.29 decode_ms=27.29 infer_ms=378.99 total_ms=406.57 psram_free=1662572
+FRAME n=440 score=0.1480 present=0 capture_ms=0.28 decode_ms=27.34 infer_ms=378.82 total_ms=406.45 psram_free=1662572
+FRAME n=441 score=0.0953 present=0 capture_ms=0.28 decode_ms=27.31 infer_ms=378.92 total_ms=406.51 psram_free=1662572

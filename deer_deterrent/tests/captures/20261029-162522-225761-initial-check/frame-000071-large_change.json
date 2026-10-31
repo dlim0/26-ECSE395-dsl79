@@ -1,0 +1,24 @@
+{
+  "frame": 71,
+  "state": "LARGE_CHANGE",
+  "area_percent": 34.354,
+  "cutoff_percent": 3.0,
+  "changed_pixels": 1649,
+  "brightness_shift": 24,
+  "bbox": [
+    1,
+    21,
+    78,
+    38
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 1,
+  "baseline_samples": 12,
+  "jpeg_bytes": 7483,
+  "fnv1a": "c7c2a103",
+  "host_received": "2026-10-29T16:25:31.334481-04:00",
+  "test_label": "initial-check"
+}

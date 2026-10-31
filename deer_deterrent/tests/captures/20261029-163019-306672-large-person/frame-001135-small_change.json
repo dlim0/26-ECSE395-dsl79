@@ -1,0 +1,24 @@
+{
+  "frame": 1135,
+  "state": "SMALL_CHANGE",
+  "area_percent": 0.312,
+  "cutoff_percent": 3.0,
+  "changed_pixels": 15,
+  "brightness_shift": 8,
+  "bbox": [
+    1,
+    51,
+    3,
+    8
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 6908,
+  "fnv1a": "3db31615",
+  "host_received": "2026-10-29T16:30:44.386048-04:00",
+  "test_label": "large-person"
+}

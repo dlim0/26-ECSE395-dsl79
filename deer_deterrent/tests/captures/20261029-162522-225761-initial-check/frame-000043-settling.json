@@ -1,0 +1,24 @@
+{
+  "frame": 43,
+  "state": "SETTLING",
+  "area_percent": 0.0,
+  "cutoff_percent": 3.0,
+  "changed_pixels": 0,
+  "brightness_shift": 0,
+  "bbox": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 1,
+  "baseline_samples": 0,
+  "jpeg_bytes": 3519,
+  "fnv1a": "1448ebf6",
+  "host_received": "2026-10-29T16:25:22.743890-04:00",
+  "test_label": "initial-check"
+}

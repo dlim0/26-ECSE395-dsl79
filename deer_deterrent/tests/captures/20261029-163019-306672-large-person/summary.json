@@ -1,0 +1,10 @@
+{
+  "label": "large-person",
+  "photos_saved": 12,
+  "measured_frames": 84,
+  "max_area_percent": 54.375,
+  "large_frames": 68,
+  "errors": [
+    "Invalid motion metadata"
+  ]
+}

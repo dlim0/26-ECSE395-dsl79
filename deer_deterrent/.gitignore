@@ -1,0 +1,7 @@
+**/.pio/
+**/managed_components/
+**/sdkconfig.classifier_test*
+**/__pycache__/
+*.pyc
+**/src/model_data.S
+tools/captures/

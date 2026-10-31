@@ -1,0 +1,24 @@
+{
+  "frame": 57,
+  "state": "CALIBRATING",
+  "area_percent": 0.0,
+  "cutoff_percent": 3.0,
+  "changed_pixels": 0,
+  "brightness_shift": 0,
+  "bbox": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 5,
+  "jpeg_bytes": 7101,
+  "fnv1a": "e73f7638",
+  "host_received": "2026-10-29T16:25:27.222635-04:00",
+  "test_label": "initial-check"
+}

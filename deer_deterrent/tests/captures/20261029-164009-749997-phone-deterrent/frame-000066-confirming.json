@@ -1,0 +1,24 @@
+{
+  "frame": 66,
+  "state": "CONFIRMING",
+  "area_percent": 7.812,
+  "cutoff_percent": 3.0,
+  "changed_pixels": 375,
+  "brightness_shift": 4,
+  "bbox": [
+    1,
+    1,
+    36,
+    28
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 7259,
+  "fnv1a": "ebedb32c",
+  "host_received": "2026-10-29T16:40:14.968654-04:00",
+  "test_label": "phone-deterrent"
+}

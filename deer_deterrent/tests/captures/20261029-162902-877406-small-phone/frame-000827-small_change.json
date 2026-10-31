@@ -1,0 +1,24 @@
+{
+  "frame": 827,
+  "state": "SMALL_CHANGE",
+  "area_percent": 1.604,
+  "cutoff_percent": 3.0,
+  "changed_pixels": 77,
+  "brightness_shift": -1,
+  "bbox": [
+    32,
+    1,
+    8,
+    13
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 7148,
+  "fnv1a": "6536ec5c",
+  "host_received": "2026-10-29T16:29:13.748880-04:00",
+  "test_label": "small-phone"
+}

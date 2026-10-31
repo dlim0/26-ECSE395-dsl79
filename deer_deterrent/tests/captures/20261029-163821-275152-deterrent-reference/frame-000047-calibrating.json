@@ -1,0 +1,24 @@
+{
+  "frame": 47,
+  "state": "CALIBRATING",
+  "area_percent": 0.0,
+  "cutoff_percent": 3.0,
+  "changed_pixels": 0,
+  "brightness_shift": 0,
+  "bbox": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 5,
+  "jpeg_bytes": 6857,
+  "fnv1a": "115d2a92",
+  "host_received": "2026-10-29T16:38:26.116004-04:00",
+  "test_label": "deterrent-reference"
+}

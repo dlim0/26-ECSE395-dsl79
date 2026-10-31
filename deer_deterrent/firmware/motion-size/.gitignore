@@ -1,0 +1,6 @@
+.pio/
+managed_components/
+sdkconfig.classifier_test*
+__pycache__/
+artifacts/
+src/model_data.S

@@ -1,0 +1,8 @@
+- 10/26/26 Had presentation on prototypes 1, 2, and 3.
+- 10/26/26 Finished the submitted assignment for prototypes.
+- 10/27/26 Talked about pivoting the assignment to better achieve prototypes
+- 10/29/26 Worked on image classification with the camera module hosted locally by ESP32 (as a updated prototype 3) and discovered that the camera module + neural network is insufficent given the resolution of the image taken, lighting levels, and the latency between components.
+- 10/29/26 Pivoted the design to be a object detection system and the design was relatively succesful (able to differentiate between large and small models)
+- 10/29/26 Incorporated other components to the design to build towards the MVP (PIR to turn on the camera and the PWM for deterrent) (LED is to be added)
+- 10/30/26 Got the progress check and was told the group is in a good spot.
+- 10/30/26 Met with the group discussing the progress of the MVP and the path to take in the next couple of days before we get ready for MVP submission

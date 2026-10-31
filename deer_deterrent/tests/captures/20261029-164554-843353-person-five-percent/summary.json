@@ -1,0 +1,13 @@
+{
+  "label": "person-five-percent",
+  "photos_saved": 3,
+  "measured_frames": 3,
+  "max_area_percent": 11.25,
+  "large_frames": 1,
+  "pir_triggers": 1,
+  "deterrent_on_events": 1,
+  "deterrent_off_events": 2,
+  "last_status": "STATUS state=COOLDOWN pir=0 cooldown_s=97 deterrents=1 camera=STANDBY",
+  "device_errors": [],
+  "errors": []
+}

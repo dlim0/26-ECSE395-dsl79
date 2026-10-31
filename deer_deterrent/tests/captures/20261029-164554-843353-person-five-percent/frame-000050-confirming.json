@@ -1,0 +1,24 @@
+{
+  "frame": 50,
+  "state": "CONFIRMING",
+  "area_percent": 11.25,
+  "cutoff_percent": 5.0,
+  "changed_pixels": 540,
+  "brightness_shift": 2,
+  "bbox": [
+    6,
+    1,
+    23,
+    41
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 7524,
+  "fnv1a": "bf94f06c",
+  "host_received": "2026-10-29T16:46:00.477186-04:00",
+  "test_label": "person-five-percent"
+}
