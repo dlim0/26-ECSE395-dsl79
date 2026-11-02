@@ -6,3 +6,4 @@
 - 10/29/26 Incorporated other components to the design to build towards the MVP (PIR to turn on the camera and the PWM for deterrent) (LED is to be added)
 - 10/30/26 Got the progress check and was told the group is in a good spot.
 - 10/30/26 Met with the group discussing the progress of the MVP and the path to take in the next couple of days before we get ready for MVP submission
+<img width="1800" height="2952" alt="image" src="https://github.com/user-attachments/assets/82ca419e-b47e-4971-bef9-e8a11386286c" />
