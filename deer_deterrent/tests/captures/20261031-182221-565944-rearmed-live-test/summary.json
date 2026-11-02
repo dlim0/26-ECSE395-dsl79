@@ -1,0 +1,13 @@
+{
+  "label": "rearmed-live-test",
+  "photos_saved": 10,
+  "measured_frames": 10,
+  "max_area_percent": 3.167,
+  "large_frames": 0,
+  "pir_triggers": 1,
+  "deterrent_on_events": 0,
+  "deterrent_off_events": 0,
+  "last_status": "STATUS state=COOLDOWN pir=0 cooldown_s=91 deterrents=6 camera=STANDBY",
+  "device_errors": [],
+  "errors": []
+}

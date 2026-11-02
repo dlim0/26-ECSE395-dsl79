@@ -1,0 +1,66 @@
+{"frame": 5, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 0, "jpeg_bytes": 6566, "fnv1a": "95344b22"}
+{"frame": 6, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 0, "jpeg_bytes": 6544, "fnv1a": "21588d24"}
+{"frame": 7, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 0, "jpeg_bytes": 6553, "fnv1a": "1c9d89ea"}
+{"frame": 8, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 0, "jpeg_bytes": 6560, "fnv1a": "54a9c770"}
+{"frame": 9, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 0, "jpeg_bytes": 6574, "fnv1a": "70b3e278"}
+{"frame": 10, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 0, "jpeg_bytes": 6538, "fnv1a": "b4275d07"}
+{"frame": 11, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 0, "jpeg_bytes": 6573, "fnv1a": "0ef003d3"}
+{"frame": 12, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "baseline_samples": 0, "jpeg_bytes": 6577, "fnv1a": "98d41426"}
+{"frame": 13, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "baseline_samples": 0, "jpeg_bytes": 6559, "fnv1a": "2c2dc0f3"}
+{"frame": 14, "state": "SETTLING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 0, "jpeg_bytes": 6554, "fnv1a": "cbbaf3ea"}
+{"frame": 15, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 1, "jpeg_bytes": 6568, "fnv1a": "2cc6b8ec"}
+{"frame": 16, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "baseline_samples": 2, "jpeg_bytes": 6569, "fnv1a": "06ed1e61"}
+{"frame": 17, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "baseline_samples": 3, "jpeg_bytes": 6541, "fnv1a": "3b831baf"}
+{"frame": 18, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 4, "jpeg_bytes": 6556, "fnv1a": "b531ec15"}
+{"frame": 19, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 5, "jpeg_bytes": 6548, "fnv1a": "52674728"}
+{"frame": 20, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 6, "jpeg_bytes": 6553, "fnv1a": "fce6c219"}
+{"frame": 21, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 7, "jpeg_bytes": 6552, "fnv1a": "00798052"}
+{"frame": 22, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 8, "jpeg_bytes": 6549, "fnv1a": "0e72ff13"}
+{"frame": 23, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "baseline_samples": 9, "jpeg_bytes": 6554, "fnv1a": "8f84d80d"}
+{"frame": 24, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 10, "jpeg_bytes": 6574, "fnv1a": "382d0868"}
+{"frame": 25, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 11, "jpeg_bytes": 6562, "fnv1a": "0dfe5ec6"}
+{"device_message": "CALIBRATION complete; baseline_fixed=1"}
+{"frame": 26, "state": "CALIBRATING", "area_percent": 0.0, "cutoff_percent": 5.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6563, "fnv1a": "bce02240"}
+{"device_message": "E (17983) gdma: gdma_disconnect(309): no peripheral is connected to the channel"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=1 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=1 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=1 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=1 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=1 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}
+{"device_message": "STATUS state=PIR_WARMUP pir=0 cooldown_s=0 deterrents=0 camera=STANDBY"}

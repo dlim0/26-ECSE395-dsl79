@@ -1,0 +1,17 @@
+RGB revision — 2026-10-31
+Build passed: 405,942 flash bytes; 59,504 static RAM bytes.
+Uploaded to COM5 successfully with flash hash verification.
+Startup photos received, reference calibration completed, camera standby/PIR warmup observed.
+User confirms white capture flashes and TFT dark.
+5 Hz alarm flashes and small/large detection with new lighting still require physical end-to-end confirmation.
+No commit or push performed.
+
+Reflashed and tested: one large-region confirmation -> alarm ON/OFF; user confirmed sound and white flashes both stopped. Rearmed with zero cooldown, accepted a second PIR event; unconfirmed ten-frame window entered 120-second cooldown. No device/transport errors. Nearby hand/forearm was the visual target; no matched flash-off test or field validation.
+
+Camera diagnostic built/flashed to COM5: 400,246 flash bytes, 45,080 static RAM bytes. Eight checksum-verified JPEGs saved in a 15-second observation; no device/transport errors. Fresh image visually inspected: recognizable indoor scene and hand, rotated camera view. PIR bypassed, buzzer disabled; this diagnostic remains running until normal classifier_test firmware is restored. CAMERA_TEST area=0 is a placeholder, not size-filter evidence.
+
+Normal classifier_test firmware restored to COM5 at user request. Build/upload succeeded with flash hash verification; fresh startup photos received and reference calibration completed. Camera standby/PIR warmup observed with PIR HIGH. Camera diagnostic no longer running. Normal PIR/size/photo-flash/sound-and-light behavior restored; live PIR LOW-to-HIGH operation has not been reverified in this restore check.
+
+Approach/10% revision built and flashed successfully to COM5 with hash verification. Final flash 409,610 bytes; static RAM 59,600 bytes. MOTION_SELFTEST PASS and APPROACH_SELFTEST PASS observed in saved USB event log. Seven verified startup JPEGs; reference learning completed; no device/transfer errors. Metadata reports 10% floor, five-frame window, 25% net growth and 96-pixel absolute gain. Existing three transfer tests passed. Physical gradual-approach acceptance and live static-scene rejection remain pending. No commit/push.
+
+Physical growth-gate trials completed: stationary object ~16.3% rejected across ten frames; approaching object grew 15.000->32.646% across five frames and triggered one ON/OFF; subsequent empty burst rejected. Small-change run max1.062% rejected, but target near edge limits its strength. Saved galleries under tests/captures. No device/transport errors. No commit/push.

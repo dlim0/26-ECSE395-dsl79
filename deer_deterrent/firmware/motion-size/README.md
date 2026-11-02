@@ -1,32 +1,27 @@
-# Current MVP â€” PIR-triggered size filter
+# Current firmware: approaching foreground region
 
-ESP32-S3 TFT Feather + OV5640 + PIR GPIO5 + passive buzzer GPIO10. See [wiring](../../WIRING.md) and [test results](../../tests/README.md).
+ESP32-S3 TFT Feather, OV5640, HC-SR501 PIR, common-ground RGB module, optional passive buzzer. [Team runbook](../../handoff/RUNBOOK.md) contains build/flash/record commands; [wiring](../../WIRING.md) is authoritative. The default normal environment is `classifier_test`; diagnostic is `camera_diagnostic`.
 
-The camera learns 12 empty reference frames at startup after 8 seconds. Keep its view clear and mount fixed. PIR warmup lasts 60 seconds. A trigger wakes the camera and inspects up to ten frames. A largest changed region of at least 5% in three consecutive frames confirms a large target.
+## Exact current gate
 
-The buzzer gives three 1.5-second 2 kHz pulses with 0.5-second gaps. Confirmed targets have no timed cooldown: after the pattern finishes, PIR must return LOW and then HIGH to retrigger. An unconfirmed ten-frame window starts a 120-second cooldown. Camera errors abort and require a new PIR transition. The camera sleeps between checks; the processor remains awake. TFT backlight is enabled for testing; Wi-Fi is disabled.
+1. PIR LOW-to-HIGH wakes the camera after startup warmup and outside cooldown/alarm. Camera exposure settles before checking up to ten frames.
+2. Decode 320x240 JPEG. Average 4x4 pixels into 80x60 grayscale, compensate median brightness shift, threshold differences at 25 grayscale levels, majority-filter 3x3 (at least five marked neighbors), then find the largest four-connected changed region.
+3. Keep five associated region frames. Neighboring boxes must overlap by at least 30% of the smaller box. A region below 48 pixels (1%) resets tracking. This is spatial association, not semantic identity.
+4. Last three areas must each be at least 480/4800 pixels (10%). Net increase from the first to fifth must be at least 25% relative AND at least 96 pixels (two percentage points of full image area).
+5. At least two individual increases must be at least max(5 pixels, integer previous area/20). Small intervening fluctuations are allowed. A single size jump or steady large object does not suffice.
 
-## Build
+Confirmation keeps the logged state name LARGE_CHANGE. A sufficiently large but unconfirmed region is WAITING_FOR_GROWTH. Metadata includes cutoff, window, required growth, absolute gain, measured growth, region box and transfer checksums. Window history resets at new bursts, manual rearm/recalibration and capture/decode errors.
 
-Install PlatformIO and place this folder under your Windows user profile. The helper uses V: as a space-free alias to that profile and the existing `.platformio` installation. It checks for conflicting V: use. From this directory in PowerShell:
+## Capture light, alarm and cooldown
 
-```powershell
-.uild.ps1
-.uild.ps1 -PioArgs @('-t','upload','--upload-port','COM5')
-```
+White turns on for at least 120 ms before capture; two queued frames are discarded, a fresh JPEG is acquired while white remains on, then light turns off. Reference and detection captures use the same process. Duration includes camera acquisition time; this is not a synchronized camera strobe.
 
-COM5 is the previously observed port; check your current device port. Uploading replaces the running firmware. No upload is needed to read the saved report. Board/framework/component versions are pinned in platformio.ini and src/idf_component.yml. The current environment name `classifier_test` is retained for compatibility with sdkconfig and dependency settings; this project runs no recognition model. ESP-DL is retained for the JPEG decoding helper.
+Alarm: three 1.5-second 2 kHz buzzer pulses with 0.5-second gaps, plus 5 Hz white flashes throughout 5.5 seconds. The timer task turns both signals off independently of USB photo streaming. After confirmation there is no timed cooldown: alarm finishes, then PIR must go LOW before a fresh HIGH. An unconfirmed ten-frame window has 120-second cooldown; still-HIGH PIR at expiry may start a new window. Camera errors abort without timed cooldown and require a fresh PIR transition.
 
-## Record a trial
+White RGB uses R13/G36/B35. TFT disabled with CS7 high/backlight45 low; do not enable ENABLE_STATUS_TFT while those RGB connections remain. Camera standby between checks, MCU awake, Wi-Fi off. No persistent on-device photo storage.
 
-Install `tools/requirements.txt` into the Python environment used for the recorder. Close other serial monitors, then from the package root:
+## Verification
 
-```powershell
-python tools/record_photos.py --port COM5 --seconds 45 --label large-target --arm
-```
+Last normal firmware flashed October 31. Embedded motion and approach selftests passed on-device; startup photos/reference learning passed; USB transfer unit tests passed. Physical recorded comparison: stationary ~16.3% object rejected; approaching object 15.0->32.646% confirmed on fifth frame, alarm commanded then stopped; small visible object max7.458% rejected. These are indoor surrogate examples, not field accuracy. User confirmed battery-only operation; runtime not measured. See [tests](../../tests/README.md).
 
-`--arm` clears cooldown and waits for PIR LOW then HIGH; it does not skip warmup. `--calibrate` relearns the empty scene. Output is saved under `tools/captures` by the copied recorder. JPEG integrity is checked by frame number, byte count and FNV-1a checksum. No photos are persisted on the Feather.
-
-## Verification status
-
-The source in this folder matches the last successfully flashed working source. The 5% phone/person result was demonstrated using an earlier one-second alarm. TFT readability is confirmed. The longer alarm and no-cooldown repeat-trigger behavior await physical confirmation. The review copy changes only build-path handling and documentation; the copied application source is unchanged.
+The legacy [HISTORY.md](HISTORY.md) and [BUILD-STATUS.txt](BUILD-STATUS.txt) preserve earlier chronological status. No new firmware upload was done as part of the November 1 documentation handoff.

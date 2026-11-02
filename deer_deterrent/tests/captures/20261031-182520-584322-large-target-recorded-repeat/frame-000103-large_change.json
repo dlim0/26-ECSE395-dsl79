@@ -1,0 +1,24 @@
+{
+  "frame": 103,
+  "state": "LARGE_CHANGE",
+  "area_percent": 27.792,
+  "cutoff_percent": 5.0,
+  "changed_pixels": 1334,
+  "brightness_shift": -1,
+  "bbox": [
+    1,
+    1,
+    47,
+    58
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 6837,
+  "fnv1a": "8deea104",
+  "host_received": "2026-10-31T18:25:27.382565-04:00",
+  "test_label": "large-target-recorded-repeat"
+}

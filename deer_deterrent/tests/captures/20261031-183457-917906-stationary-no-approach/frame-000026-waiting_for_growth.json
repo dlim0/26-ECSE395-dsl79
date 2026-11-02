@@ -1,0 +1,30 @@
+{
+  "frame": 26,
+  "state": "WAITING_FOR_GROWTH",
+  "area_percent": 16.333,
+  "cutoff_percent": 10.0,
+  "growth_window": 5,
+  "growth_required_percent": 25,
+  "growth_min_gain_pixels": 96,
+  "growth_frames": 1,
+  "growth_percent": 0,
+  "growth_pixels": 0,
+  "changed_pixels": 784,
+  "brightness_shift": -6,
+  "bbox": [
+    22,
+    1,
+    26,
+    58
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 6928,
+  "fnv1a": "87108e9f",
+  "host_received": "2026-10-31T18:35:17.858055-04:00",
+  "test_label": "stationary-no-approach"
+}

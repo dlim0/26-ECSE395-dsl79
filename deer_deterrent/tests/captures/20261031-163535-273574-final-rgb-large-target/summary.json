@@ -1,0 +1,13 @@
+{
+  "label": "final-rgb-large-target",
+  "photos_saved": 14,
+  "measured_frames": 13,
+  "max_area_percent": 22.771,
+  "large_frames": 1,
+  "pir_triggers": 2,
+  "deterrent_on_events": 1,
+  "deterrent_off_events": 1,
+  "last_status": "STATUS state=COOLDOWN pir=0 cooldown_s=85 deterrents=1 camera=STANDBY",
+  "device_errors": [],
+  "errors": []
+}

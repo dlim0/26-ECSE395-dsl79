@@ -1,0 +1,24 @@
+{
+  "frame": 13,
+  "state": "SETTLING",
+  "area_percent": 0.0,
+  "cutoff_percent": 5.0,
+  "changed_pixels": 0,
+  "brightness_shift": 0,
+  "bbox": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 1,
+  "baseline_samples": 0,
+  "jpeg_bytes": 6559,
+  "fnv1a": "2c2dc0f3",
+  "host_received": "2026-10-31T16:34:41.698925-04:00",
+  "test_label": "final-rgb-startup"
+}

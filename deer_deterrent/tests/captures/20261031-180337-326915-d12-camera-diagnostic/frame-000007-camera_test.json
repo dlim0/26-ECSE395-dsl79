@@ -1,0 +1,21 @@
+{
+  "frame": 7,
+  "state": "CAMERA_TEST",
+  "area_percent": 0,
+  "cutoff_percent": 5,
+  "bbox": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 1,
+  "jpeg_bytes": 7130,
+  "fnv1a": "3982263d",
+  "host_received": "2026-10-31T18:03:47.785073-04:00",
+  "test_label": "d12-camera-diagnostic"
+}

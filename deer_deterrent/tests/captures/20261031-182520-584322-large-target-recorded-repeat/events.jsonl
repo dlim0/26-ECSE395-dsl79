@@ -1,0 +1,143 @@
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=7 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=7 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=7 camera=STANDBY"}
+{"device_message": "PIR_TRIGGER starting_max_10_frames=1"}
+{"device_message": "I (793113) s3 ll_cam: DMA Channel=0"}
+{"device_message": "I (793113) cam_hal: cam init ok"}
+{"device_message": "I (793113) sccb-ng: pin_sda 1 pin_scl 41"}
+{"device_message": "I (793113) sccb-ng: sccb_i2c_port=1"}
+{"device_message": "I (793113) gpio: GPIO[37]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0"}
+{"device_message": "I (793143) ov3660: Mismatch PID=0x5640"}
+{"device_message": "I (793143) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00"}
+{"device_message": "I (793143) camera: Detected OV5640 camera"}
+{"device_message": "I (793143) camera: Detected camera at address=0x3c"}
+{"device_message": "I (793823) cam_hal: PSRAM DMA mode disabled"}
+{"device_message": "I (793823) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15"}
+{"device_message": "I (793823) cam_hal: Allocating 15360 Byte frame buffer in PSRAM"}
+{"device_message": "I (793823) cam_hal: cam config ok"}
+{"device_message": "I (793833) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4"}
+{"device_message": "I (793833) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz"}
+{"frame": 101, "state": "CONFIRMING", "area_percent": 28.604, "cutoff_percent": 5.0, "changed_pixels": 1373, "brightness_shift": -5, "bbox": [1, 1, 47, 58], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6759, "fnv1a": "0ae3bd88"}
+{"frame": 102, "state": "CONFIRMING", "area_percent": 28.146, "cutoff_percent": 5.0, "changed_pixels": 1351, "brightness_shift": -8, "bbox": [1, 1, 47, 58], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6727, "fnv1a": "601f9322"}
+{"device_message": "DETERRENT_ON frame=103 count=8 pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=2000 white_flash_hz=5"}
+{"frame": 103, "state": "LARGE_CHANGE", "area_percent": 27.792, "cutoff_percent": 5.0, "changed_pixels": 1334, "brightness_shift": -1, "bbox": [1, 1, 47, 58], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6837, "fnv1a": "8deea104"}
+{"device_message": "BURST_END frames=3 large_confirmed=1"}
+{"device_message": "E (796833) gdma: gdma_disconnect(309): no peripheral is connected to the channel"}
+{"device_message": "CONFIRMED cooldown_s=0 wait_for_alarm_end_then_PIR_LOW=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=8 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=1 cooldown_s=0 deterrents=8 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=8 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=8 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=8 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=8 camera=STANDBY"}
+{"device_message": "DETERRENT_OFF count=8"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=8 camera=STANDBY"}
+{"device_message": "PIR_TRIGGER starting_max_10_frames=1"}
+{"device_message": "I (803183) s3 ll_cam: DMA Channel=0"}
+{"device_message": "I (803183) cam_hal: cam init ok"}
+{"device_message": "I (803183) sccb-ng: pin_sda 1 pin_scl 41"}
+{"device_message": "I (803183) sccb-ng: sccb_i2c_port=1"}
+{"device_message": "I (803183) gpio: GPIO[37]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0"}
+{"device_message": "I (803213) ov3660: Mismatch PID=0x5640"}
+{"device_message": "I (803213) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00"}
+{"device_message": "I (803213) camera: Detected OV5640 camera"}
+{"device_message": "I (803213) camera: Detected camera at address=0x3c"}
+{"device_message": "I (803893) cam_hal: PSRAM DMA mode disabled"}
+{"device_message": "I (803893) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15"}
+{"device_message": "I (803893) cam_hal: Allocating 15360 Byte frame buffer in PSRAM"}
+{"device_message": "I (803893) cam_hal: cam config ok"}
+{"device_message": "I (803903) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4"}
+{"device_message": "I (803903) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz"}
+{"frame": 104, "state": "CONFIRMING", "area_percent": 5.625, "cutoff_percent": 5.0, "changed_pixels": 270, "brightness_shift": -7, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6753, "fnv1a": "54dc16be"}
+{"frame": 105, "state": "CONFIRMING", "area_percent": 5.396, "cutoff_percent": 5.0, "changed_pixels": 259, "brightness_shift": -8, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6758, "fnv1a": "8d3307ec"}
+{"device_message": "DETERRENT_ON frame=106 count=9 pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=2000 white_flash_hz=5"}
+{"frame": 106, "state": "LARGE_CHANGE", "area_percent": 5.375, "cutoff_percent": 5.0, "changed_pixels": 258, "brightness_shift": -8, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6757, "fnv1a": "458ecb6b"}
+{"device_message": "BURST_END frames=3 large_confirmed=1"}
+{"device_message": "E (806983) gdma: gdma_disconnect(309): no peripheral is connected to the channel"}
+{"device_message": "CONFIRMED cooldown_s=0 wait_for_alarm_end_then_PIR_LOW=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=1 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "DETERRENT_OFF count=9"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=9 camera=STANDBY"}
+{"device_message": "PIR_TRIGGER starting_max_10_frames=1"}
+{"device_message": "I (815943) s3 ll_cam: DMA Channel=0"}
+{"device_message": "I (815943) cam_hal: cam init ok"}
+{"device_message": "I (815943) sccb-ng: pin_sda 1 pin_scl 41"}
+{"device_message": "I (815943) sccb-ng: sccb_i2c_port=1"}
+{"device_message": "I (815943) gpio: GPIO[37]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0"}
+{"device_message": "I (815973) ov3660: Mismatch PID=0x5640"}
+{"device_message": "I (815973) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00"}
+{"device_message": "I (815973) camera: Detected OV5640 camera"}
+{"device_message": "I (815973) camera: Detected camera at address=0x3c"}
+{"device_message": "I (816653) cam_hal: PSRAM DMA mode disabled"}
+{"device_message": "I (816653) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15"}
+{"device_message": "I (816653) cam_hal: Allocating 15360 Byte frame buffer in PSRAM"}
+{"device_message": "I (816653) cam_hal: cam config ok"}
+{"device_message": "I (816663) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4"}
+{"device_message": "I (816663) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz"}
+{"frame": 107, "state": "CONFIRMING", "area_percent": 5.479, "cutoff_percent": 5.0, "changed_pixels": 263, "brightness_shift": -7, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6765, "fnv1a": "11bb1f13"}
+{"frame": 108, "state": "CONFIRMING", "area_percent": 5.479, "cutoff_percent": 5.0, "changed_pixels": 263, "brightness_shift": -4, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6857, "fnv1a": "b8cdad3e"}
+{"device_message": "DETERRENT_ON frame=109 count=10 pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=2000 white_flash_hz=5"}
+{"frame": 109, "state": "LARGE_CHANGE", "area_percent": 5.729, "cutoff_percent": 5.0, "changed_pixels": 275, "brightness_shift": -7, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6781, "fnv1a": "f039a156"}
+{"device_message": "BURST_END frames=3 large_confirmed=1"}
+{"device_message": "E (819703) gdma: gdma_disconnect(309): no peripheral is connected to the channel"}
+{"device_message": "CONFIRMED cooldown_s=0 wait_for_alarm_end_then_PIR_LOW=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=1 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "DETERRENT_OFF count=10"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=10 camera=STANDBY"}
+{"device_message": "PIR_TRIGGER starting_max_10_frames=1"}
+{"device_message": "I (828503) s3 ll_cam: DMA Channel=0"}
+{"device_message": "I (828503) cam_hal: cam init ok"}
+{"device_message": "I (828503) sccb-ng: pin_sda 1 pin_scl 41"}
+{"device_message": "I (828503) sccb-ng: sccb_i2c_port=1"}
+{"device_message": "I (828503) gpio: GPIO[37]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0"}
+{"device_message": "I (828533) ov3660: Mismatch PID=0x5640"}
+{"device_message": "I (828533) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00"}
+{"device_message": "I (828533) camera: Detected OV5640 camera"}
+{"device_message": "I (828533) camera: Detected camera at address=0x3c"}
+{"device_message": "I (829213) cam_hal: PSRAM DMA mode disabled"}
+{"device_message": "I (829213) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15"}
+{"device_message": "I (829213) cam_hal: Allocating 15360 Byte frame buffer in PSRAM"}
+{"device_message": "I (829213) cam_hal: cam config ok"}
+{"device_message": "I (829223) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4"}
+{"device_message": "I (829223) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz"}
+{"frame": 110, "state": "CONFIRMING", "area_percent": 5.667, "cutoff_percent": 5.0, "changed_pixels": 272, "brightness_shift": -7, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6770, "fnv1a": "0182329d"}
+{"frame": 111, "state": "CONFIRMING", "area_percent": 5.729, "cutoff_percent": 5.0, "changed_pixels": 275, "brightness_shift": -7, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6767, "fnv1a": "220ff8f2"}
+{"device_message": "DETERRENT_ON frame=112 count=11 pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=2000 white_flash_hz=5"}
+{"frame": 112, "state": "LARGE_CHANGE", "area_percent": 5.792, "cutoff_percent": 5.0, "changed_pixels": 278, "brightness_shift": -7, "bbox": [28, 1, 20, 58], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6797, "fnv1a": "00faddea"}
+{"device_message": "BURST_END frames=3 large_confirmed=1"}
+{"device_message": "E (832313) gdma: gdma_disconnect(309): no peripheral is connected to the channel"}
+{"device_message": "CONFIRMED cooldown_s=0 wait_for_alarm_end_then_PIR_LOW=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=1 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "DETERRENT_OFF count=11"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY"}

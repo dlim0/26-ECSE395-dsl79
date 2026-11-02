@@ -1,0 +1,30 @@
+{
+  "frame": 5,
+  "state": "SETTLING",
+  "area_percent": 0.0,
+  "cutoff_percent": 10.0,
+  "growth_window": 5,
+  "growth_required_percent": 25,
+  "growth_min_gain_pixels": 96,
+  "growth_frames": 0,
+  "growth_percent": 0,
+  "growth_pixels": 0,
+  "changed_pixels": 0,
+  "brightness_shift": 0,
+  "bbox": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 1,
+  "baseline_samples": 0,
+  "jpeg_bytes": 6827,
+  "fnv1a": "a99abd21",
+  "host_received": "2026-10-31T18:33:58.640252-04:00",
+  "test_label": "approach-10-percent-startup"
+}

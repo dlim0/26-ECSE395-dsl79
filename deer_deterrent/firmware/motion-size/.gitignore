@@ -1,6 +1,7 @@
 .pio/
 managed_components/
 sdkconfig.classifier_test*
+sdkconfig.camera_diagnostic*
 __pycache__/
 artifacts/
 src/model_data.S

@@ -1,28 +1,27 @@
-# Saved test sequence — October 29, 2026
+# Test evidence: current results and historical experiments
 
-Open [index.html](index.html) locally for a directory of the original photo galleries. All sessions retain their original JPEGs, metadata and event logs. These are indoor surrogate tests with a fixed camera and unmeasured target distance.
+Open [index.html](index.html) locally after downloading/cloning to browse every saved session. Dates in filenames retain the original recorded labels. Do not treat successive frames as independent accuracy trials.
 
-| Step | Observation | Gallery/evidence |
-|---|---|---|
-| Empty view, initial 3% filter | 45 measured frames; max 0.000%; no large frames | [Default view](captures/20261029-162748-872374-default-view/index.html) |
-| Phone as small target, 3% | 85 measured frames; max 1.896%; no large frames | [Small phone](captures/20261029-162902-877406-small-phone/index.html) |
-| Person as large target, 3% | 84 valid measured frames; max 54.375%; 68 large frames | [Large person](captures/20261029-163019-306672-large-person/index.html) |
-| PIR + mixed phone/forearm, 3% | ~7.8% changed region triggered the alarm; forearm means this was not a phone-only test | [Mixed target](captures/20261029-164009-749997-phone-deterrent/index.html) |
-| Phone, revised 5% cutoff | Four retained frames: 0.979%, 2.812%, 2.167%, 1.771%; no alarm | [Phone](captures/20261029-164408-046795-five-percent-live/index.html) |
-| Phone follow-up | Completed cooldown with lifetime alarm count 0 | [Status](captures/20261029-164500-946892-five-percent-window-end/summary.json) |
-| Person, 5% cutoff | 11.250%, 11.208%, 8.417%; confirmation → buzzer ON → OFF; user heard it stop | [Person](captures/20261029-164554-843353-person-five-percent/index.html) |
-| TFT startup and armed checks | Reference learning/warmup observed; armed standby; user confirmed readable display | [Startup](captures/20261029-180609-968612-display-startup/index.html), [armed status](captures/20261029-180701-165773-display-armed-check/summary.json) |
+## Current 10% + growth firmware (October 31)
 
-The initial person run excluded one malformed measurement; its 12 saved JPEGs passed integrity checks. The 5% phone recording ended mid-window, so only four measurements were retained; follow-up supports no alarm through completion, not a maximum for unseen frames. The 5% person log contains two OFF messages and one ON event; that is not two alarm cycles.
+| Trial | Changed-region area | Frames | Observed result |
+|---|---|---|---|
+| [stationary-no-approach](captures/20261031-183457-917906-stationary-no-approach/index.html) | 16.250-16.375% | 10 | No alarm; large but no growth |
+| [approaching-growth-test](captures/20261031-183551-894064-approaching-growth-test/index.html) | 15.000 -> 32.646% | 5 + 10 empty | Alarm on fifth growing frame; stopped; empty follow-up rejected |
+| [centered-small-target-repeat](captures/20261031-183751-692936-centered-small-target-repeat/index.html) | 3.792-7.458% | 10 | No alarm; small object visible |
 
-## Firmware version context
+No device/transport errors in these runs. The first small-change run reached only 1.062% with the target mostly at the edge; use the visible-object repeat above as stronger evidence. A narrow object was used as a large/approaching surrogate, not an actual deer. Buzzer was disconnected during later tests; alarm logs show commands, not audible sound.
 
-The final phone/person comparison used a one-second alarm and a cooldown after all completed windows. Current source subsequently changed to three 1.5-second pulses and no timed cooldown for confirmed targets. Both revisions built/flashed successfully. TFT readability is confirmed; the new alarm pattern and repeated confirmed-target behavior still need physical testing.
+## Earlier stages
 
-## Next checks
+- [Classifier attempt](../experiments/deer-classifier/README.md): on-device execution succeeded, deer-image recognition did not meet threshold.
+- 3% then 5% size-only trials: phone/person separation in a fixed scene; false positives later appeared around 5.4-5.8% in an apparently empty scene, motivating the growth pivot.
+- [Sound + RGB trial](captures/20261031-163535-273574-final-rgb-large-target/index.html): user confirmed sound/white flashes then both stopping under earlier size-only firmware.
+- [Camera diagnostic](captures/20261031-180337-326915-d12-camera-diagnostic/index.html): eight checksum-verified images; normal firmware was subsequently restored. CAMERA_TEST area=0 is a placeholder, not a detector measurement.
+- [Approach startup](captures/20261031-183354-551487-approach-10-percent-startup/index.html): embedded tests PASS, seven saved photos, calibration completed.
 
-- Two large-target events separated by PIR LOW: both should trigger without a two-minute wait.
-- One complete small-only ten-frame window: no alarm, then two-minute cooldown.
-- Repeat at measured distances and outdoors. Apparent image size is not physical animal size; people, shadows, foliage or camera motion can trigger changes.
+Full chronology, partial-recording caveats and earlier numeric results are preserved in [HISTORY.md](HISTORY.md). Earlier thresholds/firmware descriptions there are historical. Camera movement requires a new reference. No matched flash-off comparison quantifies illumination gain.
 
-A phone is not an actual bird, and a person is not a deer. These tests demonstrate one indoor size-separation example, not field accuracy or deterrence effectiveness. User confirmed PIR operation with the tested battery setup; battery current/runtime are unmeasured.
+## Power and outdoor evidence status
+
+User confirmed complete battery-only operation in conversation. No host recording can prove the offline segment, and no measured current/runtime was provided. Outdoor work was to be self-documented; no observations or field accuracy claims have been added. Use [the log template](../handoff/OUTDOOR_TEST_LOG.csv) when those results arrive.

@@ -1,0 +1,24 @@
+{
+  "frame": 78,
+  "state": "SMALL_CHANGE",
+  "area_percent": 3.167,
+  "cutoff_percent": 5.0,
+  "changed_pixels": 152,
+  "brightness_shift": -2,
+  "bbox": [
+    1,
+    14,
+    13,
+    30
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 6854,
+  "fnv1a": "86fd985e",
+  "host_received": "2026-10-31T18:22:31.822497-04:00",
+  "test_label": "rearmed-live-test"
+}

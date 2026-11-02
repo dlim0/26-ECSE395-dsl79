@@ -1,0 +1,24 @@
+{
+  "frame": 107,
+  "state": "CONFIRMING",
+  "area_percent": 5.479,
+  "cutoff_percent": 5.0,
+  "changed_pixels": 263,
+  "brightness_shift": -7,
+  "bbox": [
+    28,
+    1,
+    20,
+    58
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 6765,
+  "fnv1a": "11bb1f13",
+  "host_received": "2026-10-31T18:25:49.024741-04:00",
+  "test_label": "large-target-recorded-repeat"
+}

@@ -25,4 +25,13 @@ MCU GPIO numbers and Feather labels differ. This is the working mapping copied f
 
 PIR OUT → D5/GPIO5; shared ground. Preserve the existing tested PIR supply arrangement; user confirmed operation with their battery setup. Buzzer I/O → D10/GPIO10, VCC → 3V, GND → shared ground.
 
-TFT reserves SCK36, MOSI35, CS7, DC39, RESET40 and backlight45; its power setup uses GPIO21. GPIO13 remains unused by this setup. External RGB output has not been added. Do not assign RGB channels to TFT SPI pins while this display is in use.
+## RGB wiring (TFT disabled)
+
+| Module | Feather | GPIO |
+|---|---|---:|
+| R | D13 | 13 |
+| G | SCK | 36 |
+| B | MOSI | 35 |
+| GND | Shared GND | Ground |
+
+New firmware skips TFT initialization, holds TFT CS7 HIGH and backlight45 LOW. GPIO21 remains enabled. Camera/PIR/buzzer wiring is unchanged. Do not enable TFT code while the RGB uses its SPI pins.

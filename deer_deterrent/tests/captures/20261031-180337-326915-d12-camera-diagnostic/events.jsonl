@@ -1,0 +1,7 @@
+{"frame": 3, "state": "CAMERA_TEST", "area_percent": 0, "cutoff_percent": 5, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "jpeg_bytes": 7444, "fnv1a": "5548730d"}
+{"frame": 4, "state": "CAMERA_TEST", "area_percent": 0, "cutoff_percent": 5, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "jpeg_bytes": 8498, "fnv1a": "6b23c934"}
+{"frame": 5, "state": "CAMERA_TEST", "area_percent": 0, "cutoff_percent": 5, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "jpeg_bytes": 8512, "fnv1a": "ec383dea"}
+{"frame": 6, "state": "CAMERA_TEST", "area_percent": 0, "cutoff_percent": 5, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "jpeg_bytes": 8504, "fnv1a": "dd1b0d87"}
+{"frame": 7, "state": "CAMERA_TEST", "area_percent": 0, "cutoff_percent": 5, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "jpeg_bytes": 7130, "fnv1a": "3982263d"}
+{"frame": 8, "state": "CAMERA_TEST", "area_percent": 0, "cutoff_percent": 5, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "jpeg_bytes": 8065, "fnv1a": "1de93629"}
+{"frame": 9, "state": "CAMERA_TEST", "area_percent": 0, "cutoff_percent": 5, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 1, "jpeg_bytes": 8280, "fnv1a": "3d385a98"}

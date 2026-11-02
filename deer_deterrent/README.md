@@ -1,23 +1,20 @@
 # Deer deterrent MVP
 
-Current direction: PIR-triggered camera capture, a large foreground-change filter, and a buzzer. This detects large changes in the scene; it does not identify deer.
+**Start with [the team handoff](handoff/START_HERE.md).** Current device: Adafruit ESP32-S3 TFT Feather + OV5640 + PIR + RGB, with optional passive buzzer. Last flashed October 31, 2026; handoff organized November 1.
 
-| Folder | Contents |
+| Location | Purpose |
 |---|---|
-| [firmware/motion-size](firmware/motion-size/) | Current ESP32-S3 firmware: camera, PIR, size filter, buzzer and TFT |
-| [experiments/deer-classifier](experiments/deer-classifier/) | Earlier on-device recognition attempt, unchanged model, score logs and outcome |
-| [tests](tests/README.md) | Test sequence, observations and links to the saved image galleries |
-| [tests/captures](tests/captures/) | Original JPEGs, metadata, event logs and local HTML galleries |
-| [tools](tools/) | USB photo recorder and transfer integrity checks |
+| [handoff](handoff/START_HERE.md) | Current state, findings by part, runbook, known issues and outdoor-test template |
+| [firmware/motion-size](firmware/motion-size/README.md) | Current 10%-plus-growth firmware and optional camera diagnostic |
+| [experiments/deer-classifier](experiments/deer-classifier/README.md) | Earlier recognition model, diagnostic source, score logs and failed recognition result |
+| [experiments/camera-wifi-bringup](experiments/camera-wifi-bringup/README.md) | Historical Arduino Wi-Fi camera/PIR-burst prototype; not the current firmware |
+| [tests](tests/README.md) | Test results and original local photo galleries |
+| [tools](tools/) | USB recorder, requirements and transfer checks |
+| [WIRING.md](WIRING.md) | Current wiring; replaces older prototype diagrams |
+| [SOURCES.md](SOURCES.md) | Attribution and evidence provenance |
 
-See [WIRING.md](WIRING.md) for the working pin map and [SOURCES.md](SOURCES.md) for upstream attribution.
+Current trigger: PIR starts up to ten photos; five spatially associated frames must show at least 25% net growth and two percentage points of image-area gain, with the last three at least 10% of the image. At least two growth steps must exceed the per-step floor. Confirmation produces 5.5 seconds of white flashes and the buzzer signal. No timed cooldown follows confirmation; unconfirmed windows pause two minutes. This is an approaching foreground-region heuristic, **not deer recognition**.
 
-## Current behavior
+Stationary large object rejected; approaching object triggered; visible small-object repeat rejected in recorded indoor trials. User confirmed battery-only operation. Current draw, runtime and outdoor accuracy have not been measured here; outdoor observations have not yet been supplied. The buzzer was physically unplugged during the later tests, though the firmware still drives GPIO10. TFT and Wi-Fi are disabled in current firmware.
 
-Keep the view empty during startup reference learning. PIR wakes the camera for up to ten frames. A largest changed region ≥5% in three consecutive frames confirms a large target. The buzzer plays three 1.5-second pulses with 0.5-second gaps.
-
-Confirmed target: no timed cooldown; finish the alarm, observe PIR LOW, then accept the next HIGH. No confirmation in ten frames: two-minute cooldown. Camera errors abort and wait for a new PIR transition. The display shows test status.
-
-The 5% phone/person comparison succeeded with the earlier one-second alarm. Display readability is confirmed. The newer three-pulse alarm and no-cooldown repeat-trigger behavior were built/flashed but still need a physical repeat test. See [tests/README.md](tests/README.md).
-
-To view images offline, open **tests/index.html** locally and select a capture session. No ESP32 connection is needed. These files are prepared locally for review; nothing has been committed or pushed.
+Download/clone the repository, then open `tests/index.html` locally for all saved sessions. GitHub displays HTML source rather than running the gallery. Existing Lab 5 and the collaborator's upstream repository are preserved.

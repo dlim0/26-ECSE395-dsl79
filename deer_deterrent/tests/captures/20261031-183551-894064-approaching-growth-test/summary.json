@@ -1,0 +1,13 @@
+{
+  "label": "approaching-growth-test",
+  "photos_saved": 15,
+  "measured_frames": 15,
+  "max_area_percent": 32.646,
+  "large_frames": 1,
+  "pir_triggers": 2,
+  "deterrent_on_events": 1,
+  "deterrent_off_events": 1,
+  "last_status": "STATUS state=COOLDOWN pir=0 cooldown_s=106 deterrents=1 camera=STANDBY",
+  "device_errors": [],
+  "errors": []
+}

@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "Current firmware",
+      "path": "firmware/motion-size"
+    },
+    {
+      "name": "Earlier classifier",
+      "path": "experiments/deer-classifier"
+    },
+    {
+      "name": "Tests and handoff",
+      "path": "."
+    }
+  ]
+}

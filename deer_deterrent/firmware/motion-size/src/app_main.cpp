@@ -16,17 +16,17 @@
 #include "dl_image_jpeg.hpp"
 #include "mbedtls/base64.h"
 #include "status_display.hpp"
+#include "approach_gate.hpp"
 
 namespace {
 constexpr int W=80, H=60, N=W*H;
 constexpr int BASELINE_FRAMES=12;
 constexpr int PIXEL_DELTA=25;
-constexpr int MIN_REGION_PIXELS=240; // 5% of 80x60, tune from recorded tests.
-constexpr int CONFIRM_FRAMES=3;
+constexpr int MIN_REGION_PIXELS=approach::minimumArea;
 uint16_t baseline[N] = {};
 uint8_t gray[N], mask[N], cleanMask[N];
 uint16_t queuePixels[N];
-int samples=0, consecutive=0;
+int samples=0;
 std::atomic<bool> relearn{false};
 std::atomic<bool> rearm{false}, buzzerEnded{false};
 esp_timer_handle_t buzzerTimer=nullptr;
@@ -34,11 +34,35 @@ SemaphoreHandle_t buzzerMutex=nullptr;
 int buzzerTicks=-1; // 100 ms ticks; -1 means idle.
 bool cameraOnline=false;
 unsigned deterrentCount=0;
+approach::Gate growth;
+
+void setWhite(bool on) {
+    // Common-ground SunFounder RGB module: all channels HIGH makes white.
+    gpio_set_level(GPIO_NUM_13,on);
+    gpio_set_level(GPIO_NUM_36,on);
+    gpio_set_level(GPIO_NUM_35,on);
+}
+
+camera_fb_t* captureWithWhiteFlash() {
+    setWhite(true);
+    vTaskDelay(pdMS_TO_TICKS(120));
+    // The driver can already have an ambient-light frame queued. Discard two
+    // frames so the returned image is exposed while the white light is ON.
+    for(int i=0;i<2;++i) {
+        auto stale=esp_camera_fb_get();
+        if(!stale) {setWhite(false);return nullptr;}
+        esp_camera_fb_return(stale);
+    }
+    auto frame=esp_camera_fb_get();
+    setWhite(false);
+    return frame;
+}
 
 void silenceBuzzer(void*) {
     xSemaphoreTake(buzzerMutex,portMAX_DELAY);
     const bool wasActive=buzzerTicks>=0;
     buzzerTicks=-1;
+    setWhite(false);
     ledc_set_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_2,0);
     ledc_update_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_2);
     if(wasActive) buzzerEnded=true;
@@ -54,6 +78,8 @@ void buzzerPatternStep(void*) {
         const bool on=!finished && buzzerTicks%20<15;
         ledc_set_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_2,on?512:0);
         ledc_update_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_2);
+        // White flashes at 5 Hz throughout the 5.5-second alarm.
+        setWhite(!finished && buzzerTicks%2==0);
         if(finished) {buzzerTicks=-1;buzzerEnded=true;}
     }
     xSemaphoreGive(buzzerMutex);
@@ -82,6 +108,7 @@ bool soundDeterrent(unsigned frame) {
     buzzerTicks=0;
     if(esp_timer_start_periodic(buzzerTimer,100000)!=ESP_OK) {
         buzzerTicks=-1;
+        setWhite(false);
         ledc_set_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_2,0);
         ledc_update_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_2);
         xSemaphoreGive(buzzerMutex);
@@ -89,9 +116,10 @@ bool soundDeterrent(unsigned frame) {
     }
     ledc_set_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_2,512);
     ledc_update_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_2);
+    setWhite(true);
     xSemaphoreGive(buzzerMutex);
     ++deterrentCount;
-    std::printf("DETERRENT_ON frame=%u count=%u pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=2000\n",frame,deterrentCount);
+    std::printf("DETERRENT_ON frame=%u count=%u pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=2000 white_flash_hz=5\n",frame,deterrentCount);
     return true;
 }
 void cameraStandby() {
@@ -101,7 +129,7 @@ void cameraStandby() {
     gpio_set_direction(GPIO_NUM_37,GPIO_MODE_OUTPUT);
 }
 
-struct Region { int area=0,x=0,y=0,w=0,h=0; };
+using Region=approach::Region;
 Region largestRegion() {
     // Majority filter removes isolated changing pixels; then find connected components.
     std::memset(cleanMask,0,N);
@@ -129,7 +157,7 @@ Region largestRegion() {
 bool algorithmSelftest() {
     std::memset(mask,0,N);
     if(largestRegion().area!=0) return false;
-    for(int y=10;y<30;++y) for(int x=10;x<30;++x) mask[y*W+x]=1;
+    for(int y=10;y<34;++y) for(int x=10;x<34;++x) mask[y*W+x]=1;
     Region large=largestRegion();
     if(large.area<MIN_REGION_PIXELS || large.x!=10 || large.y!=10) return false;
     std::memset(mask,0,N);
@@ -144,6 +172,11 @@ void cameraPowerSetup() {
     for(auto pair : {std::pair<int,int>{7,1},{45,0},{21,1},{10,0},{37,0}}) {
         gpio_set_level(static_cast<gpio_num_t>(pair.first),pair.second);
         gpio_set_direction(static_cast<gpio_num_t>(pair.first),GPIO_MODE_OUTPUT);
+    }
+    // TFT CS remains HIGH and backlight LOW while its SPI pins drive RGB.
+    for(auto pin : {GPIO_NUM_13,GPIO_NUM_36,GPIO_NUM_35}) {
+        gpio_set_level(pin,0);
+        gpio_set_direction(pin,GPIO_MODE_OUTPUT);
     }
     gpio_set_direction(GPIO_NUM_5,GPIO_MODE_INPUT);
     gpio_set_pull_mode(GPIO_NUM_5,GPIO_PULLDOWN_ONLY);
@@ -199,19 +232,46 @@ void transmitPhoto(unsigned n,camera_fb_t* fb,const char* metadata) {
 extern "C" void app_main() {
     setvbuf(stdout,nullptr,_IONBF,0);
     vTaskDelay(pdMS_TO_TICKS(1500));
-    std::printf("BOOT pir_size_deterrent buzzer=3_pulses_1500ms_on_500ms_gap wifi=OFF\n");
+    std::printf("BOOT pir_size_deterrent buzzer=3_pulses_1500ms_on_500ms_gap rgb=WHITE photo_flash=ON alarm_flash_hz=5 tft=OFF wifi=OFF\n");
     bool pass=algorithmSelftest();
     std::printf("MOTION_SELFTEST %s\n",pass?"PASS":"FAIL");
     if(!pass) return;
+    bool growthPass=approach::selftest();
+    std::printf("APPROACH_SELFTEST %s minimum_area_percent=10 window_frames=5 net_growth_percent=25 minimum_gain_pixels=96\n",growthPass?"PASS":"FAIL");
+    if(!growthPass) return;
     cameraPowerSetup();
-    bool displayReady=status_display::initialize();
-    std::printf("DISPLAY %s\n",displayReady?"READY":"UNAVAILABLE");
+    std::printf("DISPLAY DISABLED rgb_R=13 rgb_G=36 rgb_B=35\n");
     status_display::show("STARTING","KEEP THE VIEW EMPTY",0xffe0);
     if(!initializeBuzzer()) {std::printf("ERROR buzzer_setup\n");status_display::show("BUZZER ERROR","CHECK SERIAL LOG",0xf800);return;}
     if(!esp_psram_is_initialized()) {std::printf("ERROR psram_missing\n");status_display::show("MEMORY ERROR","PSRAM NOT AVAILABLE",0xf800);return;}
     esp_err_t error=cameraInit();
     if(error!=ESP_OK) {std::printf("ERROR camera_init=%s\n",esp_err_to_name(error));status_display::show("CAMERA ERROR",esp_err_to_name(error),0xf800);return;}
     cameraOnline=true;
+#ifdef CAMERA_DIAGNOSTIC
+    // Explicit diagnostic build: bypass PIR, leave buzzer silent, keep RGB flash.
+    std::printf("READY CAMERA_DIAGNOSTIC pir=BYPASSED buzzer=OFF camera_D3=GPIO12 capture_interval_ms=1500\n");
+    unsigned diagnosticFrame=0;
+    vTaskDelay(pdMS_TO_TICKS(1200));
+    while(true) {
+        auto fb=captureWithWhiteFlash();
+        if(!fb) {
+            std::printf("ERROR diagnostic_camera_capture check_D3_to_D12\n");
+            vTaskDelay(pdMS_TO_TICKS(1500));continue;
+        }
+        const dl::image::jpeg_img_t jpeg{fb->buf,fb->len};
+        auto decoded=dl::image::sw_decode_jpeg(jpeg,dl::image::DL_IMAGE_PIX_TYPE_RGB888);
+        bool valid=decoded.data && decoded.width==320 && decoded.height==240;
+        heap_caps_free(decoded.data);
+        if(valid) {
+            char metadata[384];
+            std::snprintf(metadata,sizeof(metadata),"{\"frame\":%u,\"state\":\"CAMERA_TEST\",\"area_percent\":0,\"cutoff_percent\":5,\"bbox\":[0,0,0,0],\"grid\":[80,60],\"pir\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",++diagnosticFrame,gpio_get_level(GPIO_NUM_5),unsigned(fb->len),static_cast<unsigned long>(fnv1a(fb->buf,fb->len)));
+            std::printf("MOTION %s\n",metadata);
+            transmitPhoto(diagnosticFrame,fb,metadata);
+        } else std::printf("ERROR diagnostic_jpeg_decode check_D3_to_D12\n");
+        esp_camera_fb_return(fb);
+        vTaskDelay(pdMS_TO_TICKS(1500));
+    }
+#endif
     xTaskCreate(commandTask,"commands",3072,nullptr,3,nullptr);
     std::printf("READY clear_view_for_8_seconds_then_12_calibration_frames; commands=BASELINE,ARM; PIR_warmup=60_seconds\n");
     int64_t calibrateAfter=esp_timer_get_time()+8000000;
@@ -225,7 +285,7 @@ extern "C" void app_main() {
         if(buzzerEnded.exchange(false)) std::printf("DETERRENT_OFF count=%u\n",deterrentCount);
         if(rearm.exchange(false)) {
             esp_timer_stop(buzzerTimer);silenceBuzzer(nullptr);
-            active=false;cooldownUntil=0;consecutive=0;
+            active=false;cooldownUntil=0;growth.reset();
             previousPir=gpio_get_level(GPIO_NUM_5);
             cameraStandby();
             std::printf("ARMED manual_rearm=1 pir=%d wait_for_LOW_then_HIGH=1\n",int(previousPir));
@@ -233,7 +293,7 @@ extern "C" void app_main() {
         if(relearn.exchange(false)) {
             esp_timer_stop(buzzerTimer);silenceBuzzer(nullptr);
             active=false;cooldownUntil=0;
-            samples=0;consecutive=0;std::memset(baseline,0,sizeof(baseline));
+            samples=0;growth.reset();std::memset(baseline,0,sizeof(baseline));
             calibrateAfter=esp_timer_get_time()+3000000;
             std::printf("CALIBRATION clear_view_now; starts_in=3_seconds\n");
         }
@@ -248,7 +308,7 @@ extern "C" void app_main() {
             xSemaphoreGive(buzzerMutex);
             const char* waiting=now<pirWarmupEnd?"PIR_WARMUP":(sounding?"ALARM_ACTIVE":(cooldownUntil?"COOLDOWN":"ARMED"));
             if(now>=pirWarmupEnd && !sounding && !cooldownUntil && high && (!previousPir || cooldownExpired)) {
-                active=true;burstFrames=0;consecutive=0;previousPir=true;
+                active=true;burstFrames=0;growth.reset();previousPir=true;
                 std::printf("PIR_TRIGGER starting_max_10_frames=1\n");
                 status_display::show("PIR TRIGGER","WAKING CAMERA",0xffe0,deterrentCount);
             } else {
@@ -276,21 +336,23 @@ extern "C" void app_main() {
         if(!cameraOnline) {
             if(cameraInit()!=ESP_OK) {
                 std::printf("ERROR camera_wake; capture_aborted=1\n");
-                active=false;cooldownUntil=0;previousPir=true;cameraStandby();
+                active=false;cooldownUntil=0;previousPir=true;growth.reset();cameraStandby();
                 vTaskDelay(pdMS_TO_TICKS(500));continue;
             }
             cameraOnline=true;
             vTaskDelay(pdMS_TO_TICKS(1200));
             for(int i=0;i<3;++i) {auto discard=esp_camera_fb_get();if(discard)esp_camera_fb_return(discard);vTaskDelay(pdMS_TO_TICKS(80));}
         }
-        camera_fb_t* fb=esp_camera_fb_get();
-        if(!fb) {consecutive=0;active=false;cooldownUntil=0;previousPir=true;cameraStandby();std::printf("ERROR camera_capture\n");vTaskDelay(pdMS_TO_TICKS(500));continue;}
+        // Reference and detection photos use the same lighting to avoid
+        // treating the new flash illumination itself as a foreground target.
+        camera_fb_t* fb=captureWithWhiteFlash();
+        if(!fb) {active=false;cooldownUntil=0;previousPir=true;growth.reset();cameraStandby();std::printf("ERROR camera_capture\n");vTaskDelay(pdMS_TO_TICKS(500));continue;}
         ++n;
         const dl::image::jpeg_img_t jpeg{fb->buf,fb->len};
         auto image=dl::image::sw_decode_jpeg(jpeg,dl::image::DL_IMAGE_PIX_TYPE_RGB888);
         if(!image.data || image.width!=320 || image.height!=240) {
-            heap_caps_free(image.data);esp_camera_fb_return(fb);consecutive=0;
-            active=false;cooldownUntil=0;previousPir=true;cameraStandby();
+            heap_caps_free(image.data);esp_camera_fb_return(fb);
+            active=false;cooldownUntil=0;previousPir=true;growth.reset();cameraStandby();
             std::printf("ERROR jpeg_decode\n");vTaskDelay(pdMS_TO_TICKS(500));continue;
         }
         auto rgb=static_cast<uint8_t*>(image.data);
@@ -325,9 +387,9 @@ extern "C" void app_main() {
                 for(int i=0;i<N;++i) mask[i]=std::abs(int(gray[i])-int(baseline[i])-brightnessShift)>=PIXEL_DELTA;
                 region=largestRegion();
                 bool big=region.area>=MIN_REGION_PIXELS;
-                consecutive=big?std::min(consecutive+1,CONFIRM_FRAMES):0;
-                state=consecutive>=CONFIRM_FRAMES?"LARGE_CHANGE":(big?"CONFIRMING":(region.area?"SMALL_CHANGE":"CLEAR"));
-                fire=active && consecutive>=CONFIRM_FRAMES;
+                bool approaching=growth.update(region);
+                state=approaching?"LARGE_CHANGE":(big?"WAITING_FOR_GROWTH":(region.area?"SMALL_CHANGE":"CLEAR"));
+                fire=active && approaching;
             }
         }
         if(active) ++burstFrames;
@@ -340,8 +402,8 @@ extern "C" void app_main() {
             std::snprintf(displayDetail,sizeof(displayDetail),"KEEP VIEW EMPTY - SAMPLE %d OF 12",samples);
             status_display::show(samples?"LEARNING VIEW":"CLEAR VIEW",displayDetail,0xffe0,deterrentCount);
         }
-        char metadata[512];
-        std::snprintf(metadata,sizeof(metadata),"{\"frame\":%u,\"state\":\"%s\",\"area_percent\":%.3f,\"cutoff_percent\":5.0,\"changed_pixels\":%d,\"brightness_shift\":%d,\"bbox\":[%d,%d,%d,%d],\"grid\":[80,60],\"pir\":%d,\"baseline_samples\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",n,state,100.0*region.area/N,region.area,brightnessShift,region.x,region.y,region.w,region.h,gpio_get_level(GPIO_NUM_5),samples,unsigned(fb->len),static_cast<unsigned long>(fnv1a(fb->buf,fb->len)));
+        char metadata[768];
+        std::snprintf(metadata,sizeof(metadata),"{\"frame\":%u,\"state\":\"%s\",\"area_percent\":%.3f,\"cutoff_percent\":10.0,\"growth_window\":5,\"growth_required_percent\":25,\"growth_min_gain_pixels\":96,\"growth_frames\":%d,\"growth_percent\":%d,\"growth_pixels\":%d,\"changed_pixels\":%d,\"brightness_shift\":%d,\"bbox\":[%d,%d,%d,%d],\"grid\":[80,60],\"pir\":%d,\"baseline_samples\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",n,state,100.0*region.area/N,growth.frames(),growth.gainPercent(),growth.gainPixels(),region.area,brightnessShift,region.x,region.y,region.w,region.h,gpio_get_level(GPIO_NUM_5),samples,unsigned(fb->len),static_cast<unsigned long>(fnv1a(fb->buf,fb->len)));
         std::printf("MOTION %s\n",metadata);
         if(active || esp_timer_get_time()-lastPhoto>=2000000) {
             transmitPhoto(n,fb,metadata);lastPhoto=esp_timer_get_time();
@@ -349,12 +411,12 @@ extern "C" void app_main() {
         esp_camera_fb_return(fb);
         if(active && (fire || burstFrames>=10)) {
             std::printf("BURST_END frames=%u large_confirmed=%d\n",burstFrames,int(fire));
-            active=false;consecutive=0;
+            active=false;growth.reset();
             cooldownUntil=fire?0:esp_timer_get_time()+120000000;
             previousPir=true;
             cameraStandby();
             if(fire) std::printf("CONFIRMED cooldown_s=0 wait_for_alarm_end_then_PIR_LOW=1 camera=STANDBY\n");
-            else std::printf("COOLDOWN duration_s=120 reason=NO_LARGE_TARGET camera=STANDBY\n");
+            else std::printf("COOLDOWN duration_s=120 reason=NO_GROWING_LARGE_TARGET camera=STANDBY\n");
         }
         vTaskDelay(pdMS_TO_TICKS(250));
     }

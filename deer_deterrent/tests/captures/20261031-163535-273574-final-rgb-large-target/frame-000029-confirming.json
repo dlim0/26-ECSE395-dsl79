@@ -1,0 +1,24 @@
+{
+  "frame": 29,
+  "state": "CONFIRMING",
+  "area_percent": 22.771,
+  "cutoff_percent": 5.0,
+  "changed_pixels": 1093,
+  "brightness_shift": 28,
+  "bbox": [
+    1,
+    1,
+    48,
+    39
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 7085,
+  "fnv1a": "31af282c",
+  "host_received": "2026-10-31T16:35:58.801002-04:00",
+  "test_label": "final-rgb-large-target"
+}

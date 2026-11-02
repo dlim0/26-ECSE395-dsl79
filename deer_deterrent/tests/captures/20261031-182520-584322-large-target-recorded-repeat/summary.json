@@ -1,0 +1,13 @@
+{
+  "label": "large-target-recorded-repeat",
+  "photos_saved": 12,
+  "measured_frames": 12,
+  "max_area_percent": 28.604,
+  "large_frames": 4,
+  "pir_triggers": 4,
+  "deterrent_on_events": 4,
+  "deterrent_off_events": 4,
+  "last_status": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=11 camera=STANDBY",
+  "device_errors": [],
+  "errors": []
+}

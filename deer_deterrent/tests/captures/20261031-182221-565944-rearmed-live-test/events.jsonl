@@ -1,0 +1,65 @@
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=6 camera=STANDBY"}
+{"device_message": "PIR_TRIGGER starting_max_10_frames=1"}
+{"device_message": "I (618713) s3 ll_cam: DMA Channel=0"}
+{"device_message": "I (618713) cam_hal: cam init ok"}
+{"device_message": "I (618713) sccb-ng: pin_sda 1 pin_scl 41"}
+{"device_message": "I (618713) sccb-ng: sccb_i2c_port=1"}
+{"device_message": "I (618713) gpio: GPIO[37]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0"}
+{"device_message": "I (618743) ov3660: Mismatch PID=0x5640"}
+{"device_message": "I (618743) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00"}
+{"device_message": "I (618743) camera: Detected OV5640 camera"}
+{"device_message": "I (618743) camera: Detected camera at address=0x3c"}
+{"device_message": "I (619423) cam_hal: PSRAM DMA mode disabled"}
+{"device_message": "I (619423) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15"}
+{"device_message": "I (619423) cam_hal: Allocating 15360 Byte frame buffer in PSRAM"}
+{"device_message": "I (619423) cam_hal: cam config ok"}
+{"device_message": "I (619433) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4"}
+{"device_message": "I (619433) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz"}
+{"frame": 78, "state": "SMALL_CHANGE", "area_percent": 3.167, "cutoff_percent": 5.0, "changed_pixels": 152, "brightness_shift": -2, "bbox": [1, 14, 13, 30], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6854, "fnv1a": "86fd985e"}
+{"frame": 79, "state": "SMALL_CHANGE", "area_percent": 2.521, "cutoff_percent": 5.0, "changed_pixels": 121, "brightness_shift": -1, "bbox": [1, 20, 10, 24], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6839, "fnv1a": "14e668e4"}
+{"frame": 80, "state": "SMALL_CHANGE", "area_percent": 2.208, "cutoff_percent": 5.0, "changed_pixels": 106, "brightness_shift": -1, "bbox": [1, 16, 15, 16], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6859, "fnv1a": "01e46090"}
+{"frame": 81, "state": "SMALL_CHANGE", "area_percent": 0.958, "cutoff_percent": 5.0, "changed_pixels": 46, "brightness_shift": 1, "bbox": [3, 1, 6, 14], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6890, "fnv1a": "002f0633"}
+{"frame": 82, "state": "SMALL_CHANGE", "area_percent": 0.979, "cutoff_percent": 5.0, "changed_pixels": 47, "brightness_shift": 3, "bbox": [3, 1, 6, 14], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6987, "fnv1a": "13335eda"}
+{"frame": 83, "state": "SMALL_CHANGE", "area_percent": 0.958, "cutoff_percent": 5.0, "changed_pixels": 46, "brightness_shift": -2, "bbox": [3, 1, 6, 14], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6837, "fnv1a": "20b26069"}
+{"frame": 84, "state": "SMALL_CHANGE", "area_percent": 1.0, "cutoff_percent": 5.0, "changed_pixels": 48, "brightness_shift": -2, "bbox": [3, 1, 6, 14], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6856, "fnv1a": "96391e63"}
+{"frame": 85, "state": "SMALL_CHANGE", "area_percent": 0.979, "cutoff_percent": 5.0, "changed_pixels": 47, "brightness_shift": -2, "bbox": [3, 1, 6, 14], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 6870, "fnv1a": "988cd0a4"}
+{"frame": 86, "state": "SMALL_CHANGE", "area_percent": 1.062, "cutoff_percent": 5.0, "changed_pixels": 51, "brightness_shift": -2, "bbox": [2, 1, 7, 14], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6850, "fnv1a": "391e7e07"}
+{"frame": 87, "state": "SMALL_CHANGE", "area_percent": 1.167, "cutoff_percent": 5.0, "changed_pixels": 56, "brightness_shift": 4, "bbox": [34, 28, 8, 31], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 6970, "fnv1a": "9699b867"}
+{"device_message": "BURST_END frames=10 large_confirmed=0"}
+{"device_message": "E (626803) gdma: gdma_disconnect(309): no peripheral is connected to the channel"}
+{"device_message": "COOLDOWN duration_s=120 reason=NO_LARGE_TARGET camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=120 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=119 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=118 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=117 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=116 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=115 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=1 cooldown_s=114 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=113 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=112 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=111 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=110 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=109 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=108 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=107 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=106 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=105 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=104 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=103 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=102 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=101 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=100 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=99 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=98 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=1 cooldown_s=97 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=96 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=95 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=94 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=1 cooldown_s=93 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=92 deterrents=6 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=91 deterrents=6 camera=STANDBY"}

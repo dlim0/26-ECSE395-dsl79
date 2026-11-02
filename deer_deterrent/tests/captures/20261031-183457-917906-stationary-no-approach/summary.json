@@ -1,0 +1,13 @@
+{
+  "label": "stationary-no-approach",
+  "photos_saved": 10,
+  "measured_frames": 10,
+  "max_area_percent": 16.375,
+  "large_frames": 0,
+  "pir_triggers": 1,
+  "deterrent_on_events": 0,
+  "deterrent_off_events": 0,
+  "last_status": "STATUS state=COOLDOWN pir=0 cooldown_s=101 deterrents=0 camera=STANDBY",
+  "device_errors": [],
+  "errors": []
+}

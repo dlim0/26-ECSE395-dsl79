@@ -1,4 +1,11 @@
 #pragma once
+#if !defined(ENABLE_STATUS_TFT)
+// RGB now uses the TFT's SPI pins. Never initialize SPI or light the backlight.
+#include <cstdint>
+namespace status_display {
+inline void show(const char*,const char*,uint16_t=0x07e0,unsigned=0) {}
+}
+#else
 #include <algorithm>
 #include <cctype>
 #include <cstdio>
@@ -101,3 +108,4 @@ inline void show(const char* state,const char* detail,uint16_t color=0x07e0,unsi
     }
 }
 }
+#endif
