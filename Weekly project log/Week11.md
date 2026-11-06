@@ -1,0 +1,5 @@
+- 11/1/26 Met with the group to record video demos and discuss shortcomings of the MVP design
+- 11/2/26 Worked with the group to submit the MVP assignment and considered what to test by the next check
+- 11/4/26 Worked with the group to rework the submissions for the prototype assignments using the given feedback given by Professor Fu to deliver a submission more inline with what he was looking for
+- 11/6/26 Met with group to talk about future tests, redesign of the enclosure, and contacting the stakeholder for a review on aesthetics
+- 11/6/26 Checked with Professor Fu to see if the group is in a good spot.
