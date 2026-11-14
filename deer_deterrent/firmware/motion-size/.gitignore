@@ -2,6 +2,8 @@
 managed_components/
 sdkconfig.classifier_test*
 sdkconfig.camera_diagnostic*
+sdkconfig.pir_diagnostic*
+sdkconfig.pir_camera_bench*
 __pycache__/
 artifacts/
 src/model_data.S

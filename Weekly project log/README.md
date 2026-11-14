@@ -15,4 +15,5 @@ This repositry is a weekly log and accountability for work towards the semester 
 | Week 9  | Prototypes 3 Continued and Presentation Prep                                                                           |
 | Week 10  | Preparing the MVP                                                                           |
 | Week 11  | Resubmission of Prototypes and moving from MVP                                                                           |
+| Week 12  | Validation Testing and Future Updates + Iterations                                                           |
 

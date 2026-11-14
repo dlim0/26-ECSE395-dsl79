@@ -1,0 +1,4 @@
+- 11/9/26 Ran validation tests and reflected on them for the Validation Checkpoint assignment
+- 11/12/26 Added a vibration module and printed a potential housing for the module to reduce false positives
+- 11/13/26 Met with the group to discuss how to progress with the validation checks (minutes attached below) and how to split the work and what changes would be made for the next iteration of the design
+- 11/13/26 Decided to go for a individual test to validate the mechanism and have a third party test out the mechanism as a bird/deer/human in differing scenarios

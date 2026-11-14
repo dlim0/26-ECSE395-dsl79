@@ -29,6 +29,9 @@ uint16_t queuePixels[N];
 int samples=0;
 std::atomic<bool> relearn{false};
 std::atomic<bool> rearm{false}, buzzerEnded{false};
+#ifdef PIR_CAMERA_BENCH
+std::atomic<unsigned> benchToneHz{0};
+#endif
 esp_timer_handle_t buzzerTimer=nullptr;
 SemaphoreHandle_t buzzerMutex=nullptr;
 int buzzerTicks=-1; // 100 ms ticks; -1 means idle.
@@ -168,8 +171,9 @@ bool algorithmSelftest() {
     return largestRegion().area==0;
 }
 
-void cameraPowerSetup() {
+void cameraPowerSetup(bool driveAudioPin = true) {
     for(auto pair : {std::pair<int,int>{7,1},{45,0},{21,1},{10,0},{37,0}}) {
+        if (pair.first == 10 && !driveAudioPin) continue;
         gpio_set_level(static_cast<gpio_num_t>(pair.first),pair.second);
         gpio_set_direction(static_cast<gpio_num_t>(pair.first),GPIO_MODE_OUTPUT);
     }
@@ -202,6 +206,12 @@ void commandTask(void*) {
         if(std::fgets(command,sizeof(command),stdin)) {
             if(std::strncmp(command,"BASELINE",8)==0) relearn=true;
             if(std::strncmp(command,"ARM",3)==0) rearm=true;
+#ifdef PIR_CAMERA_BENCH
+            if(std::strcmp(command,"TONE\n")==0 || std::strcmp(command,"TONE\r\n")==0)
+                benchToneHz = 8000;
+            if(std::strcmp(command,"TONE_LOW\n")==0 || std::strcmp(command,"TONE_LOW\r\n")==0)
+                benchToneHz = 2000;
+#endif
         } else std::clearerr(stdin);
         vTaskDelay(pdMS_TO_TICKS(50));
     }
@@ -227,10 +237,121 @@ void transmitPhoto(unsigned n,camera_fb_t* fb,const char* metadata) {
     }
     std::printf("PHOTO_END %u\n",n);
 }
+
+#ifdef PIR_CAMERA_BENCH
+void playBenchTone(unsigned frequencyHz) {
+    const unsigned durationMs = frequencyHz == 2000 ? 1000 : 300;
+    ledc_timer_config_t timer{};
+    timer.speed_mode = LEDC_LOW_SPEED_MODE;
+    timer.timer_num = LEDC_TIMER_1;
+    timer.duty_resolution = LEDC_TIMER_8_BIT;
+    timer.freq_hz = frequencyHz;
+    timer.clk_cfg = LEDC_AUTO_CLK;
+    ledc_channel_config_t output{};
+    output.gpio_num = GPIO_NUM_10;
+    output.speed_mode = LEDC_LOW_SPEED_MODE;
+    output.channel = LEDC_CHANNEL_2;
+    output.timer_sel = LEDC_TIMER_1;
+    output.duty = 128;
+    if (ledc_timer_config(&timer) != ESP_OK || ledc_channel_config(&output) != ESP_OK) {
+        gpio_set_direction(GPIO_NUM_10, GPIO_MODE_INPUT);
+        std::printf("ERROR bench_tone_setup\n");
+        return;
+    }
+    std::printf("SPEAKER_TEST_ON frequency_hz=%u duration_ms=%u\n", frequencyHz, durationMs);
+    vTaskDelay(pdMS_TO_TICKS(durationMs));
+    ledc_stop(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_2, 0);
+    gpio_set_direction(GPIO_NUM_10, GPIO_MODE_INPUT);
+    std::printf("SPEAKER_TEST_OFF\n");
+}
+
+void captureBenchPhoto(unsigned frame) {
+    esp_err_t result = cameraInit();
+    if (result != ESP_OK) {
+        std::printf("ERROR bench_camera_init=%s\n", esp_err_to_name(result));
+        cameraStandby();
+        return;
+    }
+    cameraOnline = true;
+    vTaskDelay(pdMS_TO_TICKS(1200));
+    auto* photo = captureWithWhiteFlash();
+    if (photo) {
+        char metadata[384];
+        std::snprintf(metadata, sizeof(metadata),
+                      "{\"frame\":%u,\"state\":\"CAMERA_TEST\",\"area_percent\":0,\"bbox\":[0,0,0,0],\"grid\":[80,60],\"pir\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",
+                      frame, gpio_get_level(GPIO_NUM_5), unsigned(photo->len),
+                      static_cast<unsigned long>(fnv1a(photo->buf, photo->len)));
+        transmitPhoto(frame, photo, metadata);
+        esp_camera_fb_return(photo);
+    } else {
+        std::printf("ERROR bench_camera_capture\n");
+    }
+    cameraStandby();
+}
+#endif
 }
 
 extern "C" void app_main() {
     setvbuf(stdout,nullptr,_IONBF,0);
+#ifdef PIR_DIAGNOSTIC
+#ifdef PIR_CAMERA_BENCH
+    cameraPowerSetup(false);
+    gpio_set_direction(GPIO_NUM_10, GPIO_MODE_INPUT);
+    xTaskCreate(commandTask, "bench_commands", 3072, nullptr, 3, nullptr);
+#else
+    cameraPowerSetup();
+#endif
+    cameraStandby();
+    const int64_t started = esp_timer_get_time();
+    const int64_t warmupUs = 60000000;
+    const int64_t flashDurationUs = 250000;
+    int64_t nextStatus = 0;
+    int64_t highSince = 0;
+    int64_t flashUntil = 0;
+    bool armed = false;
+    unsigned triggers = 0;
+    while (true) {
+#ifdef PIR_CAMERA_BENCH
+        if (const unsigned frequencyHz = benchToneHz.exchange(0)) playBenchTone(frequencyHz);
+#endif
+        const int64_t elapsed = esp_timer_get_time() - started;
+        if (flashUntil && elapsed >= flashUntil) {
+            setWhite(false);
+            flashUntil = 0;
+        }
+        const bool high = gpio_get_level(GPIO_NUM_5);
+        if (elapsed >= warmupUs) {
+            if (!high) {
+                if (highSince) {
+                    std::printf("PIR_LOW elapsed_ms=%lld high_ms=%lld\n",
+                                elapsed / 1000, (elapsed - highSince) / 1000);
+                    highSince = 0;
+                }
+                armed = true;
+            } else if (armed) {
+                armed = false;
+                highSince = elapsed;
+                setWhite(true);
+                flashUntil = elapsed + flashDurationUs;
+                std::printf("PIR_TRIGGER count=%u elapsed_ms=%lld\n", ++triggers, elapsed / 1000);
+#ifdef PIR_CAMERA_BENCH
+                vTaskDelay(pdMS_TO_TICKS(250));
+                setWhite(false);
+                flashUntil = 0;
+                captureBenchPhoto(triggers);
+#endif
+            }
+        }
+        if (elapsed >= nextStatus) {
+            const char* state = elapsed < warmupUs ? "WARMUP" :
+                                armed ? "ARMED" : "WAIT_FOR_LOW";
+            std::printf("PIR_TEST state=%s gpio=5 pir=%d elapsed_s=%lld triggers=%u\n",
+                        state, int(high), elapsed / 1000000, triggers);
+            nextStatus = elapsed + 1000000;
+        }
+        vTaskDelay(pdMS_TO_TICKS(20));
+    }
+#endif
     vTaskDelay(pdMS_TO_TICKS(1500));
     std::printf("BOOT pir_size_deterrent buzzer=3_pulses_1500ms_on_500ms_gap rgb=WHITE photo_flash=ON alarm_flash_hz=5 tft=OFF wifi=OFF\n");
     bool pass=algorithmSelftest();
