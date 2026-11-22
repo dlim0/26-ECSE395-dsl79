@@ -1,0 +1,6 @@
+- 11/18/26 Completed validation videos for refill routines with and without the mechanism, removal for recharging, and reattachment after recharging. Prepared a feedback form with task completion times, 1-5 ease ratings, and optional notes.
+- 11/18/26 Integrated the vibration Feather with the PIR and camera Feather over Wi-Fi so PIR motion opens a 10-second window for vibration confirmation before the camera checks for a large changed region.
+- 11/18/26 Added a PIR input filter requiring 100 ms HIGH and 500 ms LOW to rearm. Tested a 4.5-second cooldown after the speaker and LED cycle to reduce repeated false triggers.
+- 11/20/26 Troubleshot the RGB LED, camera wiring, and USB download mode using individual LED, speaker, and PIR tests.
+- 11/20/26 Tested a separate battery and power board for the PIR and resolved the signal issue by connecting the PIR and ESP32-S3 to a shared ground.
+- 11/20/26 Restored the full PIR, vibration, camera, LED, and speaker sequence. Verified camera images and tested battery operation, then ran a 30-second deterrent demonstration and restored the integrated firmware.
