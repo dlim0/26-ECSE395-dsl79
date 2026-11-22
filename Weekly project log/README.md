@@ -16,4 +16,4 @@ This repositry is a weekly log and accountability for work towards the semester 
 | Week 10  | Preparing the MVP                                                                           |
 | Week 11  | Resubmission of Prototypes and moving from MVP                                                                           |
 | Week 12  | Validation Testing and Future Updates + Iterations                                                           |
-| [Week 13](Week13.md) | Validation Routines, Wireless Integration, and Power Troubleshooting |
+| Week 13 | Validation Routines, Wireless Integration, and Power Troubleshooting |

@@ -17,26 +17,42 @@
 #include "mbedtls/base64.h"
 #include "status_display.hpp"
 #include "approach_gate.hpp"
+#ifdef VIBRATION_WIFI
+#include "vibration_receiver.hpp"
+#endif
 
 namespace {
 constexpr int W=80, H=60, N=W*H;
 constexpr int BASELINE_FRAMES=12;
 constexpr int PIXEL_DELTA=25;
+#ifdef VIBRATION_WIFI
+constexpr int MIN_REGION_PIXELS=336; // 7% of the analysis grid.
+#else
 constexpr int MIN_REGION_PIXELS=approach::minimumArea;
+#endif
 uint16_t baseline[N] = {};
 uint8_t gray[N], mask[N], cleanMask[N];
 uint16_t queuePixels[N];
 int samples=0;
 std::atomic<bool> relearn{false};
+std::atomic<bool> speakerTest{false};
 std::atomic<bool> rearm{false}, buzzerEnded{false};
 #ifdef PIR_CAMERA_BENCH
-std::atomic<unsigned> benchToneHz{0};
+enum class BenchTone { none, high, low, cycle };
+std::atomic<BenchTone> benchTone{BenchTone::none};
+constexpr gpio_num_t benchPirPin = GPIO_NUM_5;
+constexpr gpio_num_t benchSpeakerPin = GPIO_NUM_10;
 #endif
 esp_timer_handle_t buzzerTimer=nullptr;
 SemaphoreHandle_t buzzerMutex=nullptr;
 int buzzerTicks=-1; // 100 ms ticks; -1 means idle.
 bool cameraOnline=false;
 unsigned deterrentCount=0;
+#ifdef VIBRATION_WIFI
+constexpr unsigned deterrentFrequencyHz = 8000;
+#else
+constexpr unsigned deterrentFrequencyHz = 2000;
+#endif
 approach::Gate growth;
 
 void setWhite(bool on) {
@@ -92,7 +108,7 @@ bool initializeBuzzer() {
     // Separate timer/channel from the camera's timer 0/channel 0 clock.
     ledc_timer_config_t timer={};
     timer.speed_mode=LEDC_LOW_SPEED_MODE;timer.duty_resolution=LEDC_TIMER_10_BIT;
-    timer.timer_num=LEDC_TIMER_1;timer.freq_hz=2000;timer.clk_cfg=LEDC_AUTO_CLK;
+    timer.timer_num=LEDC_TIMER_1;timer.freq_hz=deterrentFrequencyHz;timer.clk_cfg=LEDC_AUTO_CLK;
     if(ledc_timer_config(&timer)!=ESP_OK) return false;
     ledc_channel_config_t channel={};
     channel.gpio_num=10;channel.speed_mode=LEDC_LOW_SPEED_MODE;
@@ -122,7 +138,7 @@ bool soundDeterrent(unsigned frame) {
     setWhite(true);
     xSemaphoreGive(buzzerMutex);
     ++deterrentCount;
-    std::printf("DETERRENT_ON frame=%u count=%u pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=2000 white_flash_hz=5\n",frame,deterrentCount);
+    std::printf("DETERRENT_ON frame=%u count=%u pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=%u white_flash_hz=5\n",frame,deterrentCount,deterrentFrequencyHz);
     return true;
 }
 void cameraStandby() {
@@ -206,11 +222,14 @@ void commandTask(void*) {
         if(std::fgets(command,sizeof(command),stdin)) {
             if(std::strncmp(command,"BASELINE",8)==0) relearn=true;
             if(std::strncmp(command,"ARM",3)==0) rearm=true;
+            if(std::strcmp(command,"SOUND\n")==0 || std::strcmp(command,"SOUND\r\n")==0) speakerTest=true;
 #ifdef PIR_CAMERA_BENCH
             if(std::strcmp(command,"TONE\n")==0 || std::strcmp(command,"TONE\r\n")==0)
-                benchToneHz = 8000;
+                benchTone = BenchTone::high;
             if(std::strcmp(command,"TONE_LOW\n")==0 || std::strcmp(command,"TONE_LOW\r\n")==0)
-                benchToneHz = 2000;
+                benchTone = BenchTone::low;
+            if(std::strcmp(command,"TONE_CYCLE\n")==0 || std::strcmp(command,"TONE_CYCLE\r\n")==0)
+                benchTone = BenchTone::cycle;
 #endif
         } else std::clearerr(stdin);
         vTaskDelay(pdMS_TO_TICKS(50));
@@ -239,8 +258,11 @@ void transmitPhoto(unsigned n,camera_fb_t* fb,const char* metadata) {
 }
 
 #ifdef PIR_CAMERA_BENCH
-void playBenchTone(unsigned frequencyHz) {
-    const unsigned durationMs = frequencyHz == 2000 ? 1000 : 300;
+void playBenchTone(BenchTone tone) {
+    const unsigned frequencyHz = tone == BenchTone::low ? 2000 : 8000;
+    const unsigned pulses = tone == BenchTone::cycle ? 3 : 1;
+    const unsigned durationMs = tone == BenchTone::cycle ? 1500 :
+                                tone == BenchTone::low ? 1000 : 300;
     ledc_timer_config_t timer{};
     timer.speed_mode = LEDC_LOW_SPEED_MODE;
     timer.timer_num = LEDC_TIMER_1;
@@ -248,20 +270,28 @@ void playBenchTone(unsigned frequencyHz) {
     timer.freq_hz = frequencyHz;
     timer.clk_cfg = LEDC_AUTO_CLK;
     ledc_channel_config_t output{};
-    output.gpio_num = GPIO_NUM_10;
+    output.gpio_num = benchSpeakerPin;
     output.speed_mode = LEDC_LOW_SPEED_MODE;
     output.channel = LEDC_CHANNEL_2;
     output.timer_sel = LEDC_TIMER_1;
-    output.duty = 128;
+    output.duty = 0;
     if (ledc_timer_config(&timer) != ESP_OK || ledc_channel_config(&output) != ESP_OK) {
-        gpio_set_direction(GPIO_NUM_10, GPIO_MODE_INPUT);
+        gpio_set_direction(benchSpeakerPin, GPIO_MODE_INPUT);
         std::printf("ERROR bench_tone_setup\n");
         return;
     }
-    std::printf("SPEAKER_TEST_ON frequency_hz=%u duration_ms=%u\n", frequencyHz, durationMs);
-    vTaskDelay(pdMS_TO_TICKS(durationMs));
+    std::printf("SPEAKER_TEST_ON frequency_hz=%u pulse_ms=%u pulses=%u\n",
+                frequencyHz, durationMs, pulses);
+    for (unsigned pulse = 0; pulse < pulses; ++pulse) {
+        ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_2, 128);
+        ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_2);
+        vTaskDelay(pdMS_TO_TICKS(durationMs));
+        ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_2, 0);
+        ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_2);
+        if (pulse + 1 < pulses) vTaskDelay(pdMS_TO_TICKS(500));
+    }
     ledc_stop(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_2, 0);
-    gpio_set_direction(GPIO_NUM_10, GPIO_MODE_INPUT);
+    gpio_set_direction(benchSpeakerPin, GPIO_MODE_INPUT);
     std::printf("SPEAKER_TEST_OFF\n");
 }
 
@@ -279,7 +309,7 @@ void captureBenchPhoto(unsigned frame) {
         char metadata[384];
         std::snprintf(metadata, sizeof(metadata),
                       "{\"frame\":%u,\"state\":\"CAMERA_TEST\",\"area_percent\":0,\"bbox\":[0,0,0,0],\"grid\":[80,60],\"pir\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",
-                      frame, gpio_get_level(GPIO_NUM_5), unsigned(photo->len),
+                      frame, gpio_get_level(benchPirPin), unsigned(photo->len),
                       static_cast<unsigned long>(fnv1a(photo->buf, photo->len)));
         transmitPhoto(frame, photo, metadata);
         esp_camera_fb_return(photo);
@@ -293,13 +323,52 @@ void captureBenchPhoto(unsigned frame) {
 
 extern "C" void app_main() {
     setvbuf(stdout,nullptr,_IONBF,0);
+#ifdef VIBRATION_WIFI
+    cameraPowerSetup();
+    cameraStandby();
+    const esp_err_t wifiResult = vibration::start();
+    if (wifiResult != ESP_OK) {
+        std::printf("ERROR vibration_wifi=%s\n", esp_err_to_name(wifiResult));
+        return;
+    }
+#ifdef VIBRATION_VERIFY
+    if (!initializeBuzzer()) {
+        std::printf("ERROR vibration_alarm_setup\n");
+        return;
+    }
+    std::printf("READY VIBRATION_VERIFY ssid=%s endpoint=POST_/vibration\n", vibration::ssid);
+    int64_t nextStatus = 0;
+    while (true) {
+        if (buzzerEnded.exchange(false)) std::printf("DETERRENT_OFF count=%u\n", deterrentCount);
+        xSemaphoreTake(buzzerMutex, portMAX_DELAY);
+        const bool sounding = buzzerTicks >= 0;
+        xSemaphoreGive(buzzerMutex);
+        if (vibration::takeFreshEvent()) {
+            std::printf("VIBRATION_RECEIVED alarm_busy=%d\n", int(sounding));
+            if (!sounding && !soundDeterrent(0)) std::printf("ERROR deterrent_timer\n");
+        }
+        const int64_t now = esp_timer_get_time();
+        if (now >= nextStatus) {
+            std::printf("STATUS state=VIBRATION_VERIFY deterrents=%u\n", deterrentCount);
+            nextStatus = now + 2000000;
+        }
+        vTaskDelay(pdMS_TO_TICKS(20));
+    }
+#else
+    std::printf("READY VIBRATION_FUSION ssid=%s endpoint=POST_/vibration pir_high_ms=100 pir_low_ms=500 post_alarm_cooldown_ms=4500\n", vibration::ssid);
+#endif
+#endif
 #ifdef PIR_DIAGNOSTIC
 #ifdef PIR_CAMERA_BENCH
     cameraPowerSetup(false);
-    gpio_set_direction(GPIO_NUM_10, GPIO_MODE_INPUT);
+    gpio_set_direction(benchSpeakerPin, GPIO_MODE_INPUT);
+    gpio_set_direction(benchPirPin, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(benchPirPin, GPIO_PULLDOWN_ONLY);
+    constexpr gpio_num_t testPirPin = benchPirPin;
     xTaskCreate(commandTask, "bench_commands", 3072, nullptr, 3, nullptr);
 #else
     cameraPowerSetup();
+    constexpr gpio_num_t testPirPin = GPIO_NUM_5;
 #endif
     cameraStandby();
     const int64_t started = esp_timer_get_time();
@@ -312,14 +381,15 @@ extern "C" void app_main() {
     unsigned triggers = 0;
     while (true) {
 #ifdef PIR_CAMERA_BENCH
-        if (const unsigned frequencyHz = benchToneHz.exchange(0)) playBenchTone(frequencyHz);
+        const BenchTone tone = benchTone.exchange(BenchTone::none);
+        if (tone != BenchTone::none) playBenchTone(tone);
 #endif
         const int64_t elapsed = esp_timer_get_time() - started;
         if (flashUntil && elapsed >= flashUntil) {
             setWhite(false);
             flashUntil = 0;
         }
-        const bool high = gpio_get_level(GPIO_NUM_5);
+        const bool high = gpio_get_level(testPirPin);
         if (elapsed >= warmupUs) {
             if (!high) {
                 if (highSince) {
@@ -345,15 +415,15 @@ extern "C" void app_main() {
         if (elapsed >= nextStatus) {
             const char* state = elapsed < warmupUs ? "WARMUP" :
                                 armed ? "ARMED" : "WAIT_FOR_LOW";
-            std::printf("PIR_TEST state=%s gpio=5 pir=%d elapsed_s=%lld triggers=%u\n",
-                        state, int(high), elapsed / 1000000, triggers);
+            std::printf("PIR_TEST state=%s gpio=%d pir=%d elapsed_s=%lld triggers=%u\n",
+                        state, int(testPirPin), int(high), elapsed / 1000000, triggers);
             nextStatus = elapsed + 1000000;
         }
         vTaskDelay(pdMS_TO_TICKS(20));
     }
 #endif
     vTaskDelay(pdMS_TO_TICKS(1500));
-    std::printf("BOOT pir_size_deterrent buzzer=3_pulses_1500ms_on_500ms_gap rgb=WHITE photo_flash=ON alarm_flash_hz=5 tft=OFF wifi=OFF\n");
+    std::printf("BOOT pir_size_deterrent buzzer=3_pulses_1500ms_on_500ms_gap rgb=WHITE photo_flash=ON alarm_flash_hz=5 tft=OFF\n");
     bool pass=algorithmSelftest();
     std::printf("MOTION_SELFTEST %s\n",pass?"PASS":"FAIL");
     if(!pass) return;
@@ -394,19 +464,54 @@ extern "C" void app_main() {
     }
 #endif
     xTaskCreate(commandTask,"commands",3072,nullptr,3,nullptr);
+#ifdef PIR_WIFI_CAMERA_TEST
+    std::printf("READY PIR_WIFI_CAMERA_TEST wifi=ON vibration=BYPASSED speaker=OFF trigger=PIR_STABLE_HIGH_100ms rearm=LOW_500ms revision=20261118_review1\n");
+#endif
     std::printf("READY clear_view_for_8_seconds_then_12_calibration_frames; commands=BASELINE,ARM; PIR_warmup=60_seconds\n");
     int64_t calibrateAfter=esp_timer_get_time()+8000000;
     const int64_t pirWarmupEnd=esp_timer_get_time()+60000000;
     int64_t cooldownUntil=0,lastHeartbeat=0;
     bool active=false,previousPir=true;
+#ifdef VIBRATION_WIFI
+    int64_t pirLowSince = 0, pirHighSince = 0;
+    bool pirReady = false;
+#endif
     unsigned burstFrames=0;
+    unsigned consecutiveLargeFrames=0;
+#ifdef VIBRATION_WIFI
+    constexpr unsigned vibrationWindowSeconds = 10;
+    constexpr int64_t vibrationWindowUs = vibrationWindowSeconds * 1000000LL;
+    int64_t vibrationDeadline = 0;
+#endif
     int64_t lastPhoto=0;
     unsigned n=0;
     while(true) {
-        if(buzzerEnded.exchange(false)) std::printf("DETERRENT_OFF count=%u\n",deterrentCount);
+        if (buzzerEnded.exchange(false)) {
+            std::printf("DETERRENT_OFF count=%u\n", deterrentCount);
+#ifdef VIBRATION_WIFI
+            cooldownUntil = esp_timer_get_time() + 4500000;
+            vibrationDeadline = 0;
+            pirReady = false;
+            pirLowSince = pirHighSince = 0;
+            vibration::receivedMs.exchange(0);
+            std::printf("COOLDOWN duration_ms=4500 reason=ALARM_FINISHED\n");
+#endif
+        }
+        if (speakerTest.exchange(false)) {
+            if (!active) {
+                std::printf("SPEAKER_TEST requested=1\n");
+                if (!soundDeterrent(0)) std::printf("ERROR speaker_test_timer\n");
+            } else {
+                std::printf("SPEAKER_TEST busy=camera; retry_after_capture=1\n");
+            }
+        }
         if(rearm.exchange(false)) {
             esp_timer_stop(buzzerTimer);silenceBuzzer(nullptr);
             active=false;cooldownUntil=0;growth.reset();
+#ifdef VIBRATION_WIFI
+            vibrationDeadline = 0;
+            pirReady = false; pirLowSince = pirHighSince = 0;
+#endif
             previousPir=gpio_get_level(GPIO_NUM_5);
             cameraStandby();
             std::printf("ARMED manual_rearm=1 pir=%d wait_for_LOW_then_HIGH=1\n",int(previousPir));
@@ -414,6 +519,10 @@ extern "C" void app_main() {
         if(relearn.exchange(false)) {
             esp_timer_stop(buzzerTimer);silenceBuzzer(nullptr);
             active=false;cooldownUntil=0;
+#ifdef VIBRATION_WIFI
+            vibrationDeadline = 0;
+            previousPir = gpio_get_level(GPIO_NUM_5);
+#endif
             samples=0;growth.reset();std::memset(baseline,0,sizeof(baseline));
             calibrateAfter=esp_timer_get_time()+3000000;
             std::printf("CALIBRATION clear_view_now; starts_in=3_seconds\n");
@@ -428,13 +537,65 @@ extern "C" void app_main() {
             bool sounding=buzzerTicks>=0;
             xSemaphoreGive(buzzerMutex);
             const char* waiting=now<pirWarmupEnd?"PIR_WARMUP":(sounding?"ALARM_ACTIVE":(cooldownUntil?"COOLDOWN":"ARMED"));
-            if(now>=pirWarmupEnd && !sounding && !cooldownUntil && high && (!previousPir || cooldownExpired)) {
-                active=true;burstFrames=0;growth.reset();previousPir=true;
+#ifdef VIBRATION_WIFI
+            const bool canWait = now >= pirWarmupEnd && !sounding && !cooldownUntil;
+            if (!canWait) vibration::receivedMs.exchange(0);
+            if (!canWait || vibrationDeadline) {
+                pirReady = false;
+                pirLowSince = pirHighSince = 0;
+            } else if (!high) {
+                pirHighSince = 0;
+                if (!pirLowSince) pirLowSince = now;
+                if (now - pirLowSince >= 500000) pirReady = true;
+            } else {
+                pirLowSince = 0;
+                if (!pirHighSince) pirHighSince = now;
+            }
+            const bool qualifiedPir = canWait && high && pirReady &&
+                                      now - pirHighSince >= 100000;
+            if (qualifiedPir) {
+                pirReady = false;
+                pirLowSince = pirHighSince = 0;
+            }
+#ifdef PIR_WIFI_CAMERA_TEST
+            const bool startCapture = qualifiedPir;
+            previousPir = high;
+            if(startCapture) std::printf("PIR_TRIGGER test=PIR_WIFI_CAMERA starting_max_10_frames=1\n");
+#else
+            if (vibrationDeadline && now >= vibrationDeadline) {
+                vibrationDeadline = 0;
+                std::printf("VIBRATION_TIMEOUT camera=STANDBY\n");
+            }
+            if (qualifiedPir && !vibrationDeadline) {
+                vibration::receivedMs.exchange(0);
+                vibrationDeadline = now + vibrationWindowUs;
+                std::printf("PIR_TRIGGER waiting_for_vibration_s=%u camera=STANDBY\n",
+                            vibrationWindowSeconds);
+            }
+            if (!sounding) previousPir = high;
+            if (vibrationDeadline)
+                waiting = "WAIT_FOR_VIBRATION";
+            const bool startCapture = canWait && vibrationDeadline && vibration::takeFreshEvent();
+            if (startCapture) {
+                vibrationDeadline = 0;
+                std::printf("VIBRATION_RECEIVED starting_max_10_frames=1\n");
+            }
+#endif
+#else
+            const bool startCapture = now>=pirWarmupEnd && !sounding && !cooldownUntil &&
+                                      high && (!previousPir || cooldownExpired);
+#endif
+            if(startCapture) {
+                active=true;burstFrames=0;consecutiveLargeFrames=0;growth.reset();previousPir=true;
+#ifndef VIBRATION_WIFI
                 std::printf("PIR_TRIGGER starting_max_10_frames=1\n");
+#endif
                 status_display::show("PIR TRIGGER","WAKING CAMERA",0xffe0,deterrentCount);
             } else {
                 // Require a fresh LOW after the alarm finishes before another trigger.
+#ifndef VIBRATION_WIFI
                 if(!sounding) previousPir=high;
+#endif
                 if(now-lastHeartbeat>=1000000) {
                     std::printf("STATUS state=%s pir=%d cooldown_s=%lld deterrents=%u camera=STANDBY\n",waiting,int(high),cooldownUntil?static_cast<long long>((cooldownUntil-now+999999)/1000000):0LL,deterrentCount);
                     char detail[40];
@@ -473,8 +634,17 @@ extern "C" void app_main() {
         auto image=dl::image::sw_decode_jpeg(jpeg,dl::image::DL_IMAGE_PIX_TYPE_RGB888);
         if(!image.data || image.width!=320 || image.height!=240) {
             heap_caps_free(image.data);esp_camera_fb_return(fb);
+            std::printf("ERROR jpeg_decode\n");
+            consecutiveLargeFrames=0;
+#ifdef VIBRATION_WIFI
+            if(active && ++burstFrames<10) {
+                vTaskDelay(pdMS_TO_TICKS(250));
+                continue;
+            }
+            if(active) std::printf("BURST_END frames=%u large_confirmed=0 reason=JPEG_DECODE\n",burstFrames);
+#endif
             active=false;cooldownUntil=0;previousPir=true;growth.reset();cameraStandby();
-            std::printf("ERROR jpeg_decode\n");vTaskDelay(pdMS_TO_TICKS(500));continue;
+            vTaskDelay(pdMS_TO_TICKS(500));continue;
         }
         auto rgb=static_cast<uint8_t*>(image.data);
         for(int y=0;y<H;++y) for(int x=0;x<W;++x) {
@@ -505,15 +675,34 @@ extern "C" void app_main() {
                 for(int i=0;i<N;++i) ++histogram[int(gray[i])-int(baseline[i])+255];
                 int cumulative=0;
                 for(int j=0;j<511;++j) {cumulative+=histogram[j];if(cumulative>=N/2){brightnessShift=j-255;break;}}
-                for(int i=0;i<N;++i) mask[i]=std::abs(int(gray[i])-int(baseline[i])-brightnessShift)>=PIXEL_DELTA;
+                for(int i=0;i<N;++i) {
+                    int pixelDelta=PIXEL_DELTA;
+#ifdef VIBRATION_WIFI
+                    // Dark baseline blocks need less contrast to reveal a target.
+                    pixelDelta=std::min(PIXEL_DELTA,6+int(baseline[i])/4);
+#endif
+                    mask[i]=std::abs(int(gray[i])-int(baseline[i])-brightnessShift)>=pixelDelta;
+                }
                 region=largestRegion();
                 bool big=region.area>=MIN_REGION_PIXELS;
+#ifdef VIBRATION_WIFI
+                consecutiveLargeFrames=big?consecutiveLargeFrames+1:0;
+                fire=active && consecutiveLargeFrames>=2;
+                state=fire?"LARGE_CHANGE":(big?"CONFIRMING":(region.area?"SMALL_CHANGE":"CLEAR"));
+#else
                 bool approaching=growth.update(region);
                 state=approaching?"LARGE_CHANGE":(big?"WAITING_FOR_GROWTH":(region.area?"SMALL_CHANGE":"CLEAR"));
                 fire=active && approaching;
+#endif
             }
         }
         if(active) ++burstFrames;
+#ifdef PIR_WIFI_CAMERA_TEST
+        fire=false;
+#endif
+        #ifdef PIR_WIFI_CAMERA_TEST
+        if (std::strcmp(state, "LARGE_CHANGE") == 0) state = "LARGE_CHANGE_TEST_ONLY";
+#endif
         if(fire && !soundDeterrent(n)) std::printf("ERROR deterrent_timer; buzzer_not_started=1\n");
         char displayDetail[48];
         std::snprintf(displayDetail,sizeof(displayDetail),"AREA %.1f%% - FRAME %u OF 10",100.0*region.area/N,burstFrames);
@@ -524,7 +713,15 @@ extern "C" void app_main() {
             status_display::show(samples?"LEARNING VIEW":"CLEAR VIEW",displayDetail,0xffe0,deterrentCount);
         }
         char metadata[768];
+#ifdef VIBRATION_WIFI
+        std::snprintf(metadata, sizeof(metadata),
+                      "{\"frame\":%u,\"state\":\"%s\",\"area_percent\":%.3f,\"cutoff_percent\":7.0,\"changed_pixels\":%d,\"brightness_shift\":%d,\"bbox\":[%d,%d,%d,%d],\"grid\":[80,60],\"pir\":%d,\"baseline_samples\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",
+                      n, state, 100.0*region.area/N, region.area, brightnessShift,
+                      region.x, region.y, region.w, region.h, gpio_get_level(GPIO_NUM_5),
+                      samples, unsigned(fb->len), static_cast<unsigned long>(fnv1a(fb->buf, fb->len)));
+#else
         std::snprintf(metadata,sizeof(metadata),"{\"frame\":%u,\"state\":\"%s\",\"area_percent\":%.3f,\"cutoff_percent\":10.0,\"growth_window\":5,\"growth_required_percent\":25,\"growth_min_gain_pixels\":96,\"growth_frames\":%d,\"growth_percent\":%d,\"growth_pixels\":%d,\"changed_pixels\":%d,\"brightness_shift\":%d,\"bbox\":[%d,%d,%d,%d],\"grid\":[80,60],\"pir\":%d,\"baseline_samples\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",n,state,100.0*region.area/N,growth.frames(),growth.gainPercent(),growth.gainPixels(),region.area,brightnessShift,region.x,region.y,region.w,region.h,gpio_get_level(GPIO_NUM_5),samples,unsigned(fb->len),static_cast<unsigned long>(fnv1a(fb->buf,fb->len)));
+#endif
         std::printf("MOTION %s\n",metadata);
         if(active || esp_timer_get_time()-lastPhoto>=2000000) {
             transmitPhoto(n,fb,metadata);lastPhoto=esp_timer_get_time();
@@ -533,11 +730,19 @@ extern "C" void app_main() {
         if(active && (fire || burstFrames>=10)) {
             std::printf("BURST_END frames=%u large_confirmed=%d\n",burstFrames,int(fire));
             active=false;growth.reset();
+#ifdef VIBRATION_WIFI
+            cooldownUntil=0;
+#else
             cooldownUntil=fire?0:esp_timer_get_time()+120000000;
+#endif
             previousPir=true;
             cameraStandby();
-            if(fire) std::printf("CONFIRMED cooldown_s=0 wait_for_alarm_end_then_PIR_LOW=1 camera=STANDBY\n");
-            else std::printf("COOLDOWN duration_s=120 reason=NO_GROWING_LARGE_TARGET camera=STANDBY\n");
+            if(fire) std::printf("CONFIRMED post_alarm_cooldown_ms=4500 wait_for_PIR_LOW=1 camera=STANDBY\n");
+#ifdef VIBRATION_WIFI
+            else std::printf("NO_CONFIRMED_TARGET cooldown_s=0 wait_for_PIR_LOW=1 camera=STANDBY\n");
+#else
+            else std::printf("COOLDOWN duration_s=120 reason=NO_CONFIRMED_TARGET camera=STANDBY\n");
+#endif
         }
         vTaskDelay(pdMS_TO_TICKS(250));
     }

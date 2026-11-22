@@ -4,6 +4,7 @@ sdkconfig.classifier_test*
 sdkconfig.camera_diagnostic*
 sdkconfig.pir_diagnostic*
 sdkconfig.pir_camera_bench*
+sdkconfig.vibration_*
 __pycache__/
 artifacts/
 src/model_data.S
