@@ -1,8 +1,8 @@
-> **Current November 23 firmware and test status:** [Read the updated handoff](../../handoff/CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
+> **Current November 23 firmware and test status:** [Read the updated handoff](../../FinalReportCode/CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
 
 # Current firmware: approaching foreground region
 
-ESP32-S3 TFT Feather, OV5640, HC-SR501 PIR, common-ground RGB module, optional passive buzzer. [Team runbook](../../handoff/RUNBOOK.md) contains build/flash/record commands; [wiring](../../WIRING.md) is authoritative. The default normal environment is `classifier_test`; diagnostic is `camera_diagnostic`.
+ESP32-S3 TFT Feather, OV5640, HC-SR501 PIR, common-ground RGB module, optional passive buzzer. [Team runbook](../../FinalReportCode/RUNBOOK.md) contains build/flash/record commands; [wiring](../../WIRING.md) is authoritative. The default normal environment is `classifier_test`; diagnostic is `camera_diagnostic`.
 
 ## Exact current gate
 

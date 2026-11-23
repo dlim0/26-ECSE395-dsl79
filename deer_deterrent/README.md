@@ -1,12 +1,12 @@
-> **Current November 23 firmware and test status:** [Read the updated handoff](handoff/CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
+> **Current November 23 firmware and test status:** [Read the updated handoff](FinalReportCode/CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
 
 # Deer deterrent MVP
 
-**Start with [the team handoff](handoff/START_HERE.md).** Current device: Adafruit ESP32-S3 TFT Feather + OV5640 + PIR + RGB, with optional passive buzzer. Last flashed October 31, 2026; handoff organized November 1.
+**Start with [the team handoff](FinalReportCode/START_HERE.md).** Current device: Adafruit ESP32-S3 TFT Feather + OV5640 + PIR + RGB, with optional passive buzzer. Last flashed October 31, 2026; handoff organized November 1.
 
 | Location | Purpose |
 |---|---|
-| [handoff](handoff/START_HERE.md) | Current state, findings by part, runbook, known issues and outdoor-test template |
+| [handoff](FinalReportCode/START_HERE.md) | Current state, findings by part, runbook, known issues and outdoor-test template |
 | [firmware/motion-size](firmware/motion-size/README.md) | Current 10%-plus-growth firmware and optional camera diagnostic |
 | [experiments/deer-classifier](experiments/deer-classifier/README.md) | Earlier recognition model, diagnostic source, score logs and failed recognition result |
 | [experiments/camera-wifi-bringup](experiments/camera-wifi-bringup/README.md) | Historical Arduino Wi-Fi camera/PIR-burst prototype; not the current firmware |

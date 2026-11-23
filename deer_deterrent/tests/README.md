@@ -1,4 +1,4 @@
-> **Current November 23 firmware and test status:** [Read the updated handoff](../handoff/CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
+> **Current November 23 firmware and test status:** [Read the updated handoff](../FinalReportCode/CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
 
 # Test evidence: current results and historical experiments
 
@@ -26,4 +26,4 @@ Full chronology, partial-recording caveats and earlier numeric results are prese
 
 ## Power and outdoor evidence status
 
-User confirmed complete battery-only operation in conversation. No host recording can prove the offline segment, and no measured current/runtime was provided. Outdoor work was to be self-documented; no observations or field accuracy claims have been added. Use [the log template](../handoff/OUTDOOR_TEST_LOG.csv) when those results arrive.
+User confirmed complete battery-only operation in conversation. No host recording can prove the offline segment, and no measured current/runtime was provided. Outdoor work was to be self-documented; no observations or field accuracy claims have been added. Use [the log template](../FinalReportCode/OUTDOOR_TEST_LOG.csv) when those results arrive.
