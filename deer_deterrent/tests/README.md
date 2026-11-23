@@ -1,3 +1,5 @@
+> **Current November 23 firmware and test status:** [Read the updated handoff](../handoff/CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
+
 # Test evidence: current results and historical experiments
 
 Open [index.html](index.html) locally after downloading/cloning to browse every saved session. Dates in filenames retain the original recorded labels. Do not treat successive frames as independent accuracy trials.

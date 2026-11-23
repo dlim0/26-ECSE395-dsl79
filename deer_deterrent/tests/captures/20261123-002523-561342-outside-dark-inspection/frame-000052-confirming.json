@@ -1,0 +1,24 @@
+{
+  "frame": 52,
+  "state": "CONFIRMING",
+  "area_percent": 7.271,
+  "cutoff_percent": 7.0,
+  "changed_pixels": 349,
+  "brightness_shift": 0,
+  "bbox": [
+    31,
+    30,
+    26,
+    23
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 3208,
+  "fnv1a": "b8c83e4c",
+  "host_received": "2026-11-23T00:25:30.675618-05:00",
+  "test_label": "outside-dark-inspection"
+}

@@ -1,0 +1,24 @@
+{
+  "frame": 53,
+  "state": "LARGE_CHANGE",
+  "area_percent": 7.688,
+  "cutoff_percent": 7.0,
+  "changed_pixels": 369,
+  "brightness_shift": 0,
+  "bbox": [
+    31,
+    30,
+    27,
+    23
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 1,
+  "baseline_samples": 12,
+  "jpeg_bytes": 3243,
+  "fnv1a": "6cb707fd",
+  "host_received": "2026-11-23T00:25:31.689984-05:00",
+  "test_label": "outside-dark-inspection"
+}

@@ -31,6 +31,15 @@ constexpr int MIN_REGION_PIXELS=336; // 7% of the analysis grid.
 constexpr int MIN_REGION_PIXELS=approach::minimumArea;
 #endif
 uint16_t baseline[N] = {};
+#ifdef VIBRATION_WIFI
+// RGB block averages preserve color changes lost by luminance conversion.
+uint16_t baselineRgb[N][3] = {};
+uint8_t blockRgb[N][3];
+bool colorAssist=false;
+// Provisional darkness gate: at least 75% of blocks below 20/255 luminance.
+constexpr int DARK_BLOCK_LEVEL=20, COLOR_REGION_PIXELS=480;
+uint8_t grayscaleMask[N];
+#endif
 uint8_t gray[N], mask[N], cleanMask[N];
 uint16_t queuePixels[N];
 int samples=0;
@@ -456,7 +465,10 @@ extern "C" void app_main() {
         if(valid) {
             char metadata[384];
             std::snprintf(metadata,sizeof(metadata),"{\"frame\":%u,\"state\":\"CAMERA_TEST\",\"area_percent\":0,\"cutoff_percent\":5,\"bbox\":[0,0,0,0],\"grid\":[80,60],\"pir\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",++diagnosticFrame,gpio_get_level(GPIO_NUM_5),unsigned(fb->len),static_cast<unsigned long>(fnv1a(fb->buf,fb->len)));
-            std::printf("MOTION %s\n",metadata);
+    #ifdef VIBRATION_WIFI
+        std::printf("DETECTION_SCORES frame=%u grayscale_percent=%.3f assisted_percent=%.3f color_enabled=%d grayscale_cutoff=7 color_cutoff=10\n",n,100.0*grayscaleRegion.area/N,100.0*assistedArea/N,int(colorAssist));
+#endif
+        std::printf("MOTION %s\n",metadata);
             transmitPhoto(diagnosticFrame,fb,metadata);
         } else std::printf("ERROR diagnostic_jpeg_decode check_D3_to_D12\n");
         esp_camera_fb_return(fb);
@@ -524,6 +536,10 @@ extern "C" void app_main() {
             previousPir = gpio_get_level(GPIO_NUM_5);
 #endif
             samples=0;growth.reset();std::memset(baseline,0,sizeof(baseline));
+#ifdef VIBRATION_WIFI
+            std::memset(baselineRgb,0,sizeof(baselineRgb));
+            colorAssist=false;
+#endif
             calibrateAfter=esp_timer_get_time()+3000000;
             std::printf("CALIBRATION clear_view_now; starts_in=3_seconds\n");
         }
@@ -650,22 +666,46 @@ extern "C" void app_main() {
         for(int y=0;y<H;++y) for(int x=0;x<W;++x) {
             // Average each 4x4 block to reduce noise and high-frequency texture.
             unsigned sum=0;
+#ifdef VIBRATION_WIFI
+            unsigned channels[3]={};
+#endif
             for(int dy=0;dy<4;++dy) for(int dx=0;dx<4;++dx) {
                 size_t p=((y*4+dy)*320+x*4+dx)*3;
                 sum+=(77*rgb[p]+150*rgb[p+1]+29*rgb[p+2])>>8;
+#ifdef VIBRATION_WIFI
+                for(int c=0;c<3;++c) channels[c]+=rgb[p+c];
+#endif
             }
             gray[y*W+x]=sum/16;
+#ifdef VIBRATION_WIFI
+            for(int c=0;c<3;++c) blockRgb[y*W+x][c]=channels[c]/16;
+#endif
         }
         heap_caps_free(image.data);
         const char* state="SETTLING";
         Region region;
+#ifdef VIBRATION_WIFI
+        Region grayscaleRegion;
+        int assistedArea=0;
+        bool qualified=false;
+#endif
         int brightnessShift=0;
         bool fire=false;
         if(esp_timer_get_time()>=calibrateAfter) {
             if(samples<BASELINE_FRAMES) {
                 for(int i=0;i<N;++i) baseline[i]+=gray[i];
+#ifdef VIBRATION_WIFI
+                for(int i=0;i<N;++i) for(int c=0;c<3;++c) baselineRgb[i][c]+=blockRgb[i][c];
+#endif
                 if(++samples==BASELINE_FRAMES) {
                     for(int i=0;i<N;++i) baseline[i]/=BASELINE_FRAMES;
+#ifdef VIBRATION_WIFI
+                    for(int i=0;i<N;++i) for(int c=0;c<3;++c) baselineRgb[i][c]/=BASELINE_FRAMES;
+                    int darkBlocks=0;
+                    for(int i=0;i<N;++i) darkBlocks+=baseline[i]<DARK_BLOCK_LEVEL;
+                    colorAssist=darkBlocks*4>=N*3;
+                    std::printf("DETECTION_MODE color_assist=%d dark_blocks_percent=%.1f grayscale_cutoff=7 color_cutoff=10\n",int(colorAssist),100.0*darkBlocks/N);
+#endif
                     std::printf("CALIBRATION complete; baseline_fixed=1\n");
                 }
                 state="CALIBRATING";
@@ -677,19 +717,36 @@ extern "C" void app_main() {
                 for(int j=0;j<511;++j) {cumulative+=histogram[j];if(cumulative>=N/2){brightnessShift=j-255;break;}}
                 for(int i=0;i<N;++i) {
                     int pixelDelta=PIXEL_DELTA;
-#ifdef VIBRATION_WIFI
-                    // Dark baseline blocks need less contrast to reveal a target.
-                    pixelDelta=std::min(PIXEL_DELTA,6+int(baseline[i])/4);
-#endif
                     mask[i]=std::abs(int(gray[i])-int(baseline[i])-brightnessShift)>=pixelDelta;
+#ifdef VIBRATION_WIFI
+                    grayscaleMask[i]=mask[i];
+                    // A common RGB brightness offset cancels in this chroma range.
+                    // Average blocks and require stronger color contrast than luma
+                    // to avoid counting individual dark-frame color speckles.
+                    int lo=255,hi=-255;
+                    for(int c=0;c<3;++c) {
+                        int delta=int(blockRgb[i][c])-int(baselineRgb[i][c]);
+                        lo=std::min(lo,delta);hi=std::max(hi,delta);
+                    }
+                    int colorDelta=std::min(25,10+int(baseline[i])/4);
+                    mask[i]=mask[i] || (colorAssist && hi-lo>=colorDelta);
+#endif
                 }
                 region=largestRegion();
-                bool big=region.area>=MIN_REGION_PIXELS;
 #ifdef VIBRATION_WIFI
+                assistedArea=colorAssist?region.area:0;
+                std::memcpy(mask,grayscaleMask,sizeof(mask));
+                grayscaleRegion=largestRegion();
+                bool grayscalePass=grayscaleRegion.area>=MIN_REGION_PIXELS;
+                bool colorPass=colorAssist && assistedArea>=COLOR_REGION_PIXELS;
+                bool big=grayscalePass || colorPass;
+                qualified=big;
+                if(grayscalePass || !colorPass) region=grayscaleRegion;
                 consecutiveLargeFrames=big?consecutiveLargeFrames+1:0;
                 fire=active && consecutiveLargeFrames>=2;
                 state=fire?"LARGE_CHANGE":(big?"CONFIRMING":(region.area?"SMALL_CHANGE":"CLEAR"));
 #else
+                bool big=region.area>=MIN_REGION_PIXELS;
                 bool approaching=growth.update(region);
                 state=approaching?"LARGE_CHANGE":(big?"WAITING_FOR_GROWTH":(region.area?"SMALL_CHANGE":"CLEAR"));
                 fire=active && approaching;
@@ -707,7 +764,13 @@ extern "C" void app_main() {
         char displayDetail[48];
         std::snprintf(displayDetail,sizeof(displayDetail),"AREA %.1f%% - FRAME %u OF 10",100.0*region.area/N,burstFrames);
         if(fire) status_display::show("LARGE TARGET",displayDetail,0xf800,deterrentCount);
-        else if(active) status_display::show(region.area>=MIN_REGION_PIXELS?"CONFIRMING":"SMALL / CLEAR",displayDetail,0xffe0,deterrentCount);
+        else if(active) status_display::show(
+#ifdef VIBRATION_WIFI
+            qualified
+#else
+            region.area>=MIN_REGION_PIXELS
+#endif
+            ?"CONFIRMING":"SMALL / CLEAR",displayDetail,0xffe0,deterrentCount);
         else {
             std::snprintf(displayDetail,sizeof(displayDetail),"KEEP VIEW EMPTY - SAMPLE %d OF 12",samples);
             status_display::show(samples?"LEARNING VIEW":"CLEAR VIEW",displayDetail,0xffe0,deterrentCount);
@@ -715,12 +778,15 @@ extern "C" void app_main() {
         char metadata[768];
 #ifdef VIBRATION_WIFI
         std::snprintf(metadata, sizeof(metadata),
-                      "{\"frame\":%u,\"state\":\"%s\",\"area_percent\":%.3f,\"cutoff_percent\":7.0,\"changed_pixels\":%d,\"brightness_shift\":%d,\"bbox\":[%d,%d,%d,%d],\"grid\":[80,60],\"pir\":%d,\"baseline_samples\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",
-                      n, state, 100.0*region.area/N, region.area, brightnessShift,
+                      "{\"frame\":%u,\"state\":\"%s\",\"area_percent\":%.3f,\"cutoff_percent\":%.1f,\"changed_pixels\":%d,\"brightness_shift\":%d,\"bbox\":[%d,%d,%d,%d],\"grid\":[80,60],\"pir\":%d,\"baseline_samples\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",
+                      n, state, 100.0*region.area/N, (colorAssist && grayscaleRegion.area<MIN_REGION_PIXELS && assistedArea>=COLOR_REGION_PIXELS)?10.0:7.0, region.area, brightnessShift,
                       region.x, region.y, region.w, region.h, gpio_get_level(GPIO_NUM_5),
                       samples, unsigned(fb->len), static_cast<unsigned long>(fnv1a(fb->buf, fb->len)));
 #else
         std::snprintf(metadata,sizeof(metadata),"{\"frame\":%u,\"state\":\"%s\",\"area_percent\":%.3f,\"cutoff_percent\":10.0,\"growth_window\":5,\"growth_required_percent\":25,\"growth_min_gain_pixels\":96,\"growth_frames\":%d,\"growth_percent\":%d,\"growth_pixels\":%d,\"changed_pixels\":%d,\"brightness_shift\":%d,\"bbox\":[%d,%d,%d,%d],\"grid\":[80,60],\"pir\":%d,\"baseline_samples\":%d,\"jpeg_bytes\":%u,\"fnv1a\":\"%08lx\"}",n,state,100.0*region.area/N,growth.frames(),growth.gainPercent(),growth.gainPixels(),region.area,brightnessShift,region.x,region.y,region.w,region.h,gpio_get_level(GPIO_NUM_5),samples,unsigned(fb->len),static_cast<unsigned long>(fnv1a(fb->buf,fb->len)));
+#endif
+#ifdef VIBRATION_WIFI
+        std::printf("DETECTION_SCORES frame=%u grayscale_percent=%.3f assisted_percent=%.3f color_enabled=%d grayscale_cutoff=7 color_cutoff=10\n",n,100.0*grayscaleRegion.area/N,100.0*assistedArea/N,int(colorAssist));
 #endif
         std::printf("MOTION %s\n",metadata);
         if(active || esp_timer_get_time()-lastPhoto>=2000000) {

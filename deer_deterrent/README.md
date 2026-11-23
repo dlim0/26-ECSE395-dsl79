@@ -1,3 +1,5 @@
+> **Current November 23 firmware and test status:** [Read the updated handoff](handoff/CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
+
 # Deer deterrent MVP
 
 **Start with [the team handoff](handoff/START_HERE.md).** Current device: Adafruit ESP32-S3 TFT Feather + OV5640 + PIR + RGB, with optional passive buzzer. Last flashed October 31, 2026; handoff organized November 1.

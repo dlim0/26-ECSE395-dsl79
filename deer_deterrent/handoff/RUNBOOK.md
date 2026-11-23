@@ -1,3 +1,5 @@
+> **Current November 23 firmware and test status:** [Read the updated handoff](CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
+
 # Build, run, record and recover
 
 ## Normal operation

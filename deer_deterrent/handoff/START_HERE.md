@@ -1,3 +1,5 @@
+> **Current November 23 firmware and test status:** [Read the updated handoff](CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
+
 # Team handoff: read this first
 
 Prepared November 1, 2026. Work and recorded indoor tests: October 29-31. Repository: https://github.com/dlim0/26-ECSE395-dsl79/tree/main/deer_deterrent

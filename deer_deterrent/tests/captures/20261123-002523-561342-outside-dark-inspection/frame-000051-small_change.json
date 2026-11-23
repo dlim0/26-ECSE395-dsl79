@@ -1,0 +1,24 @@
+{
+  "frame": 51,
+  "state": "SMALL_CHANGE",
+  "area_percent": 5.042,
+  "cutoff_percent": 7.0,
+  "changed_pixels": 242,
+  "brightness_shift": 0,
+  "bbox": [
+    28,
+    21,
+    16,
+    24
+  ],
+  "grid": [
+    80,
+    60
+  ],
+  "pir": 0,
+  "baseline_samples": 12,
+  "jpeg_bytes": 2748,
+  "fnv1a": "d2b9b912",
+  "host_received": "2026-11-23T00:25:30.171210-05:00",
+  "test_label": "outside-dark-inspection"
+}

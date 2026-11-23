@@ -1,0 +1,13 @@
+{
+  "label": "outside-dark-inspection",
+  "photos_saved": 18,
+  "measured_frames": 18,
+  "max_area_percent": 7.688,
+  "large_frames": 1,
+  "pir_triggers": 2,
+  "deterrent_on_events": 1,
+  "deterrent_off_events": 1,
+  "last_status": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=1 camera=STANDBY",
+  "device_errors": [],
+  "errors": []
+}

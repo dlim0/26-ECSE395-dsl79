@@ -1,0 +1,103 @@
+{"device_message": "VIBRATION_RECEIVED starting_max_10_frames=1"}
+{"device_message": "I (148444) s3 ll_cam: DMA Channel=1"}
+{"device_message": "I (148444) cam_hal: cam init ok"}
+{"device_message": "I (148444) sccb-ng: pin_sda 1 pin_scl 41"}
+{"device_message": "I (148444) sccb-ng: sccb_i2c_port=1"}
+{"device_message": "I (148444) gpio: GPIO[37]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0"}
+{"device_message": "I (148474) ov3660: Mismatch PID=0x5640"}
+{"device_message": "I (148474) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00"}
+{"device_message": "I (148474) camera: Detected OV5640 camera"}
+{"device_message": "I (148474) camera: Detected camera at address=0x3c"}
+{"device_message": "I (149154) cam_hal: PSRAM DMA mode disabled"}
+{"device_message": "I (149154) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15"}
+{"device_message": "I (149154) cam_hal: Allocating 15360 Byte frame buffer in PSRAM"}
+{"device_message": "I (149154) cam_hal: cam config ok"}
+{"device_message": "I (149164) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4"}
+{"device_message": "I (149164) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz"}
+{"device_message": "DETECTION_SCORES frame=46 grayscale_percent=0.438 assisted_percent=1.104 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 46, "state": "SMALL_CHANGE", "area_percent": 0.438, "cutoff_percent": 7.0, "changed_pixels": 21, "brightness_shift": 0, "bbox": [28, 26, 3, 9], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2433, "fnv1a": "3e894956"}
+{"device_message": "DETECTION_SCORES frame=47 grayscale_percent=0.000 assisted_percent=0.542 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 47, "state": "CLEAR", "area_percent": 0.0, "cutoff_percent": 7.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2350, "fnv1a": "527d639a"}
+{"device_message": "DETECTION_SCORES frame=48 grayscale_percent=0.000 assisted_percent=0.500 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 48, "state": "CLEAR", "area_percent": 0.0, "cutoff_percent": 7.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2365, "fnv1a": "3e5280cc"}
+{"device_message": "DETECTION_SCORES frame=49 grayscale_percent=0.000 assisted_percent=0.125 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 49, "state": "CLEAR", "area_percent": 0.0, "cutoff_percent": 7.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2324, "fnv1a": "d1a4fb0f"}
+{"device_message": "DETECTION_SCORES frame=50 grayscale_percent=0.000 assisted_percent=0.083 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 50, "state": "CLEAR", "area_percent": 0.0, "cutoff_percent": 7.0, "changed_pixels": 0, "brightness_shift": 0, "bbox": [0, 0, 0, 0], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2312, "fnv1a": "4cfc3833"}
+{"device_message": "DETECTION_SCORES frame=51 grayscale_percent=5.042 assisted_percent=6.750 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 51, "state": "SMALL_CHANGE", "area_percent": 5.042, "cutoff_percent": 7.0, "changed_pixels": 242, "brightness_shift": 0, "bbox": [28, 21, 16, 24], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2748, "fnv1a": "d2b9b912"}
+{"device_message": "DETECTION_SCORES frame=52 grayscale_percent=7.271 assisted_percent=9.354 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 52, "state": "CONFIRMING", "area_percent": 7.271, "cutoff_percent": 7.0, "changed_pixels": 349, "brightness_shift": 0, "bbox": [31, 30, 26, 23], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 3208, "fnv1a": "b8c83e4c"}
+{"device_message": "DETERRENT_ON frame=53 count=1 pulses=3 on_ms=1500 gap_ms=500 duration_ms=5500 frequency_hz=8000 white_flash_hz=5"}
+{"device_message": "DETECTION_SCORES frame=53 grayscale_percent=7.688 assisted_percent=9.417 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 53, "state": "LARGE_CHANGE", "area_percent": 7.688, "cutoff_percent": 7.0, "changed_pixels": 369, "brightness_shift": 0, "bbox": [31, 30, 27, 23], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 3243, "fnv1a": "6cb707fd"}
+{"device_message": "BURST_END frames=8 large_confirmed=1"}
+{"device_message": "E (155134) gdma: gdma_disconnect(309): no peripheral is connected to the channel"}
+{"device_message": "CONFIRMED post_alarm_cooldown_ms=4500 wait_for_PIR_LOW=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=1 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=1 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ALARM_ACTIVE pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "DETERRENT_OFF count=1"}
+{"device_message": "COOLDOWN duration_ms=4500 reason=ALARM_FINISHED"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=4 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=3 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=1 cooldown_s=2 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=COOLDOWN pir=0 cooldown_s=1 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "PIR_TRIGGER waiting_for_vibration_s=10 camera=STANDBY"}
+{"device_message": "STATUS state=WAIT_FOR_VIBRATION pir=1 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=WAIT_FOR_VIBRATION pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=WAIT_FOR_VIBRATION pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=WAIT_FOR_VIBRATION pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=WAIT_FOR_VIBRATION pir=1 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=WAIT_FOR_VIBRATION pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=WAIT_FOR_VIBRATION pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=WAIT_FOR_VIBRATION pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "VIBRATION_RECEIVED starting_max_10_frames=1"}
+{"device_message": "I (176484) s3 ll_cam: DMA Channel=1"}
+{"device_message": "I (176484) cam_hal: cam init ok"}
+{"device_message": "I (176484) sccb-ng: pin_sda 1 pin_scl 41"}
+{"device_message": "I (176484) sccb-ng: sccb_i2c_port=1"}
+{"device_message": "I (176484) gpio: GPIO[37]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0"}
+{"device_message": "I (176514) ov3660: Mismatch PID=0x5640"}
+{"device_message": "I (176514) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00"}
+{"device_message": "I (176514) camera: Detected OV5640 camera"}
+{"device_message": "I (176514) camera: Detected camera at address=0x3c"}
+{"device_message": "I (177194) cam_hal: PSRAM DMA mode disabled"}
+{"device_message": "I (177194) cam_hal: buffer_size: 16384, half_buffer_size: 1024, node_buffer_size: 1024, node_cnt: 16, total_cnt: 15"}
+{"device_message": "I (177194) cam_hal: Allocating 15360 Byte frame buffer in PSRAM"}
+{"device_message": "I (177194) cam_hal: cam config ok"}
+{"device_message": "I (177204) ov5640: Set PLL: bypass: 0, multiplier: 180, sys_div: 4, pre_div: 2, root_2x: 0, pclk_root_div: 2, pclk_manual: 1, pclk_div: 4"}
+{"device_message": "I (177204) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 10000000 Hz, VCO: 1800000000 Hz, PLL_CLK: 180000000 Hz, SYSCLK: 45000000 Hz, PCLK: 11250000 Hz"}
+{"device_message": "DETECTION_SCORES frame=54 grayscale_percent=1.604 assisted_percent=2.500 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 54, "state": "SMALL_CHANGE", "area_percent": 1.604, "cutoff_percent": 7.0, "changed_pixels": 77, "brightness_shift": 0, "bbox": [41, 25, 8, 15], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2438, "fnv1a": "4cd94962"}
+{"device_message": "DETECTION_SCORES frame=55 grayscale_percent=2.312 assisted_percent=3.021 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 55, "state": "SMALL_CHANGE", "area_percent": 2.312, "cutoff_percent": 7.0, "changed_pixels": 111, "brightness_shift": 0, "bbox": [40, 25, 9, 17], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2509, "fnv1a": "2d87d283"}
+{"device_message": "DETECTION_SCORES frame=56 grayscale_percent=2.833 assisted_percent=3.812 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 56, "state": "SMALL_CHANGE", "area_percent": 2.833, "cutoff_percent": 7.0, "changed_pixels": 136, "brightness_shift": 0, "bbox": [40, 24, 11, 20], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 2603, "fnv1a": "30efb053"}
+{"device_message": "DETECTION_SCORES frame=57 grayscale_percent=2.812 assisted_percent=3.688 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 57, "state": "SMALL_CHANGE", "area_percent": 2.812, "cutoff_percent": 7.0, "changed_pixels": 135, "brightness_shift": 0, "bbox": [39, 25, 12, 19], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 2604, "fnv1a": "185cfbb9"}
+{"device_message": "DETECTION_SCORES frame=58 grayscale_percent=3.667 assisted_percent=4.375 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 58, "state": "SMALL_CHANGE", "area_percent": 3.667, "cutoff_percent": 7.0, "changed_pixels": 176, "brightness_shift": 0, "bbox": [38, 23, 13, 22], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2700, "fnv1a": "23fe2dce"}
+{"device_message": "DETECTION_SCORES frame=59 grayscale_percent=3.562 assisted_percent=3.792 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 59, "state": "SMALL_CHANGE", "area_percent": 3.562, "cutoff_percent": 7.0, "changed_pixels": 171, "brightness_shift": 0, "bbox": [39, 23, 12, 22], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2617, "fnv1a": "48a7cb98"}
+{"device_message": "DETECTION_SCORES frame=60 grayscale_percent=3.562 assisted_percent=3.938 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 60, "state": "SMALL_CHANGE", "area_percent": 3.562, "cutoff_percent": 7.0, "changed_pixels": 171, "brightness_shift": 0, "bbox": [39, 23, 12, 22], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2635, "fnv1a": "8afc4678"}
+{"device_message": "DETECTION_SCORES frame=61 grayscale_percent=3.167 assisted_percent=3.938 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 61, "state": "SMALL_CHANGE", "area_percent": 3.167, "cutoff_percent": 7.0, "changed_pixels": 152, "brightness_shift": 0, "bbox": [40, 23, 12, 22], "grid": [80, 60], "pir": 0, "baseline_samples": 12, "jpeg_bytes": 2606, "fnv1a": "4a5d9adc"}
+{"device_message": "DETECTION_SCORES frame=62 grayscale_percent=3.250 assisted_percent=4.021 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 62, "state": "SMALL_CHANGE", "area_percent": 3.25, "cutoff_percent": 7.0, "changed_pixels": 156, "brightness_shift": 0, "bbox": [39, 23, 13, 22], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 2614, "fnv1a": "3af15aaf"}
+{"device_message": "DETECTION_SCORES frame=63 grayscale_percent=3.396 assisted_percent=3.792 color_enabled=1 grayscale_cutoff=7 color_cutoff=10"}
+{"frame": 63, "state": "SMALL_CHANGE", "area_percent": 3.396, "cutoff_percent": 7.0, "changed_pixels": 163, "brightness_shift": 0, "bbox": [38, 24, 13, 21], "grid": [80, 60], "pir": 1, "baseline_samples": 12, "jpeg_bytes": 2618, "fnv1a": "189c4f61"}
+{"device_message": "BURST_END frames=10 large_confirmed=0"}
+{"device_message": "E (184294) gdma: gdma_disconnect(309): no peripheral is connected to the channel"}
+{"device_message": "NO_CONFIRMED_TARGET cooldown_s=0 wait_for_PIR_LOW=1 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=1 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "STATUS state=ARMED pir=0 cooldown_s=0 deterrents=1 camera=STANDBY"}
+{"device_message": "PIR_TRIGGER waiting_for_vibration_s=10 camera=STANDBY"}
