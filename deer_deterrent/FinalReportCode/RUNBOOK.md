@@ -1,57 +1,98 @@
-> **Current November 23 firmware and test status:** [Read the updated handoff](CURRENT_STATE_2026-11-23.md). The older descriptions below are historical and may describe the superseded growth-only detector.
+# Build, operate and record the main board
 
-# Build, run, record and recover
+The integrated target is `vibration_fusion` in [firmware/motion-size](../firmware/motion-size/README.md). Its named environment selects the PIR/vibration/current image path. The program's [target table](../firmware/motion-size/README.md#environments) describes the six alternatives; `classifier_test` is the retained growth alternative, not the fusion target.
 
-## Normal operation
+The preserved [November 23 account](CURRENT_STATE_2026-11-23.md) records the configuration and observations from that session. Use the current build settings and recording commands below for this checkout; the dated account remains unchanged.
 
-1. Follow [WIRING.md](../WIRING.md). Camera D3 is Feather D12/GPIO12; PIR OUT is D5/GPIO5. Keep RGB wired to 13/SCK/MOSI only with TFT-disabled firmware.
-2. Mount the camera before power-up. Keep the view empty during the initial 8-second wait and 12 reference frames. Every captured reference frame uses white illumination.
-3. Allow 60-second PIR warmup (measured after camera initialization). Wait for PIR LOW, then move the target toward the camera over several frames.
-4. Up to ten images are checked. Confirmed approach gives a 5.5-second alarm; both light and buzzer signal stop. Wait for PIR LOW before another HIGH. An unconfirmed window gives 120-second cooldown; if PIR remains HIGH at expiry it may start another check.
+## Build the integrated target
 
-On battery, detection runs locally and USB photo transfer is skipped. Photos are not saved persistently on the Feather. A disconnected buzzer does not block detection or RGB; it simply makes the buzzer signal inaudible. The MCU remains awake between checks; camera standby is not full-system deep sleep.
+Use PlatformIO Core. From the repository root:
 
-## Windows build and flash
-
-Install PlatformIO. Place the repository below your Windows user profile; the helper expects PlatformIO at `.platformio` under that profile and creates/reuses V: as its space-free alias. It stops on conflicting V: usage. A fresh machine may need PlatformIO/ESP-IDF dependency installation; the helper checks esp-idf-kconfig 2.5.4 once its IDF Python environment exists. Linux/macOS build-path settings are not supplied/tested here.
-
-From `deer_deterrent/firmware/motion-size`:
-
-```powershell
-.uild.ps1 -PioArgs @('-e','classifier_test')
-.uild.ps1 -PioArgs @('-e','classifier_test','-t','upload','--upload-port','COM5')
+```sh
+pio run --project-dir deer_deterrent/firmware/motion-size --environment vibration_fusion
 ```
 
-Check the actual device port; COM5 is the last observed value, not a guaranteed assignment. Close serial monitors before upload. No reflash is required just to clear cooldown or recalibrate. The environment's legacy name does not select the old deer model. Current dependencies: espressif32 6.10.0, ESP-IDF 5.4.2, camera 2.1.3, ESP-DL 3.3.14 (JPEG helper), CMake 3.30.2.
+The project pins espressif32 6.11.0 and the ESP-IDF framework package 3.50402.0; the component manifest pins ESP-DL 3.3.14 and esp32-camera 2.1.3. CMake is constrained to the 3.30 patch family. See [platformio.ini](../firmware/motion-size/platformio.ini), [the component manifest](../firmware/motion-size/src/idf_component.yml) and [the lock file](../firmware/motion-size/dependencies.lock) for the declared configuration. ESP-DL supplies the JPEG decoder used by this program.
 
-## USB photo recording
+Platform 6.11 supplies the Kconfig 2.5 Python tools during a fresh ESP-IDF bootstrap. The older 6.10 bootstrap's Kconfig 1.5 package failed configuration of this project with a `MenuNode.help` error. An existing Core directory can retain that older framework-specific Python environment, so use a new empty Core directory for a clean provisioning check and record the actual tool versions. The framework stays at ESP-IDF 5.4.2; the platform update does not select a different detector or board.
 
-From `deer_deterrent`:
+The project uses PlatformIO's native Core/package directories unless environment overrides are supplied. Build output defaults to `.pio/build-native/vibration_fusion` within the motion-size project. The framework and build paths must be free of spaces for the pinned ESP-IDF integration. Keep the explicit environment name when recording a build result; a generic successful build does not by itself identify the intended target.
 
-```powershell
-python -m pip install -r tools/requirements.txt
-python tools/record_photos.py --port COM5 --seconds 45 --label trial-01
-python tools/record_photos.py --port COM5 --seconds 45 --label new-empty-reference --calibrate
-python tools/record_photos.py --port COM5 --seconds 45 --label controlled-repeat --arm
-python -m unittest discover -s tools -p test_transfer.py -v
-```
+### Existing Windows helper
 
-`--calibrate` cancels the active window/alarm, clears cooldown, waits three seconds, and learns 12 new empty frames. `--arm` cancels active work and clears cooldown while preserving the reference; it does not bypass warmup and needs PIR LOW then HIGH. Use these separately (calibrate wins if both are provided). Only one serial monitor can hold the port.
-
-Recorder output goes to `tools/captures/<timestamp>-<label>` (gitignored until deliberately copied into `tests/captures`). Keep all JPG, JSON, events.jsonl, summary.json and index.html files together. Originals are unchanged; galleries overlay region boxes. Recorder validates frame IDs, JPEG markers, byte length and FNV-1a transfer checksum. A completed summary's large_frames counts confirmed frames, not independent trials.
-
-## Camera-only diagnostic and restore
+From the repository root in PowerShell:
 
 ```powershell
-.uild.ps1 -PioArgs @('-e','camera_diagnostic','-t','upload','--upload-port','COM5')
+Set-Location deer_deterrent/firmware/motion-size
+.\build.ps1 -PioArgs @('-e','vibration_fusion')
 ```
 
-This repeatedly captures with white illumination, regardless of PIR, with buzzer silent. Repeated flashes in this mode are expected. CAMERA_TEST area=0 is a placeholder, not a detection result. Inspect images as well as decode status.
+The unchanged helper requires the project beneath the current Windows user profile. It checks or creates the `V:` alias, rejects conflicting use of that drive, sets the PlatformIO Core path to the alias and forwards the argument array. The package directory then defaults beneath that same Core path. The helper checks esp-idf-kconfig 2.5.4 when its IDF Python environment already exists and can install that version. First-use framework/tool provisioning is separate from selecting the correct program.
 
-Restore normal operation explicitly:
+### Configuration and upload
+
+PlatformIO selects `sdkconfig.<environment>`. Fusion starts from `sdkconfig.defaults` when no `sdkconfig.vibration_fusion` exists; the tracked `sdkconfig.pir_wifi_camera_test` belongs to that diagnostic. Existing generated configuration values can take precedence over later defaults, so record the actual selected configuration and tool versions with a build.
+
+Compilation does not upload firmware. For an intended Windows upload through the same helper, add the upload target and the board's verified port:
 
 ```powershell
-.uild.ps1 -PioArgs @('-e','classifier_test','-t','upload','--upload-port','COM5')
+.\build.ps1 -PioArgs @('-e','vibration_fusion','-t','upload','--upload-port','COM5')
 ```
 
-Do not flash the archived Arduino/TFT prototype with RGB connected to the shared SPI pins. The separately archived classifier experiment also replaces normal operation when uploaded.
+`COM5` is the port named in the preserved handoff and is only an example here. Use the actual device port and close other serial readers first. The equivalent direct PlatformIO command adds `--target upload --upload-port` and that port to the explicit fusion build command. Uploading a diagnostic replaces fusion until fusion is uploaded again. No upload is needed to inspect saved evidence or run the host recorder tests.
+
+## Start fusion operation
+
+Use the [source camera configuration](../firmware/motion-size/src/app_main.cpp), existing [camera/RGB pin map](../WIRING.md) and [dated hardware account](CURRENT_STATE_2026-11-23.md). The latter describes the separate PIR supply with common ground; the feeder sender source is not included here.
+
+1. Fix the camera in place and keep the view empty through the eight-second settling interval and all twelve baseline frames. Reference pictures use the same white-light capture sequence as detection pictures.
+2. Allow the sixty-second PIR warm-up. Read `DETECTION_MODE` after calibration to identify whether the reference enabled color assistance.
+3. PIR LOW for 500 ms followed by HIGH for 100 ms opens a ten-second vibration wait. A fresh message during that wait starts capture. See the [message contract](../firmware/motion-size/VIBRATION_TEST.md).
+4. Two consecutive frames qualifying through the 7% grayscale or dark-enabled 10% assisted route start the output cycle. A failed ten-frame burst has no timed post-miss pause; an output cycle is followed by a 4.5-second cooldown and fresh PIR rearming.
+
+Reference mode remains fixed until recalibration/reset. Keep the original reference setup and actual scene conditions in the recording notes. `CAMERA_TEST`, `LARGE_CHANGE_TEST_ONLY`, SETTLING and CALIBRATING records have diagnostic/setup meanings; their values are not ordinary target-performance observations.
+
+## Record a controlled session
+
+Use Python 3.10 or newer and the serial dependency described in [tools/README.md](../tools/README.md). From `deer_deterrent`, with other serial readers closed:
+
+```sh
+python tools/record_photos.py --port COM5 --seconds 120 --label fusion-01
+```
+
+Choose the actual port. Recording uses 115200 baud. The example starts a new timestamped directory under `tools/captures`; `--output` can name another new directory. Start recording before the trigger when the complete PIR/wait/capture history matters. Use `--notes` for actual power, target, distance, illumination, reference and sender conditions.
+
+The existing optional actions are explicit:
+
+```sh
+python tools/record_photos.py --port COM5 --seconds 120 --label new-reference --calibrate
+python tools/record_photos.py --port COM5 --seconds 120 --label controlled-repeat --arm
+```
+
+`--calibrate` requests `BASELINE`: cancel current work, wait three seconds and learn twelve new empty frames. It selects color assistance again without restarting the original PIR warm-up clock. `--arm` requests `ARM`: cancel current work and rearm while retaining the reference; warm-up and the qualified LOW/HIGH sequence still apply. These options are mutually exclusive. Use no action flag when observing the automatic lifecycle, and mark any controlled reset deliberately. Cancelling an active output cycle still produces its completion handling and normal post-output cooldown.
+
+A recorded host write is a request; the device's observed acknowledgement is separate. `--config-file` and `--firmware-binary` hash supplied local files, which does not prove those files were running on the board. The recorder adds no new board command.
+
+Keep `serial.raw`, `events.jsonl`, the paired JPEG/JSON files, `summary.json`, `index.html` and `run_manifest.json` together. The tools guide explains schema-3 association, close status, errors and incomplete observations. A closed manifest or successful recorder exit establishes its defined recording result, not a successful detection or verified physical response. Keep new outputs separate from original sessions under `tests/captures`.
+
+## Checks and interpretation
+
+For host recording tests, from `deer_deterrent`:
+
+```sh
+python -I -B -m unittest discover -s tools -p 'test_*.py' -v
+```
+
+These check transport, event/score association and presentation with retained or constructed inputs. They require no board, model, Pillow or C++ compiler and do not establish camera decisions or physical output behavior.
+
+For later device observations, record the selected environment and distinguish these cases:
+
+| Case | What to observe |
+|---|---|
+| PIR without a notification | The wait opens and times out with the camera in standby |
+| Notification without a qualified PIR window | Receipt may be acknowledged, but fusion does not start a camera burst |
+| Qualified PIR plus a fresh notification | Camera start, every retained attempt/score and the resulting confirmed or rejected burst |
+| A confirmed output followed by another attempt | Software ON/OFF, the configured cooldown and new LOW/HIGH rearm, with physical observations recorded separately |
+| Dark targets at documented distances | Both score paths, reference mode and every failure as well as success; no replacement of a missing reference by an apparently empty operational image |
+
+The [saved night run](../tests/README.md#november-23-fusion-session) contains a grayscale-qualified software alarm, not a color-only activation. Its original gallery retains a three-frame caption that does not describe this program. Preserve that evidence; use the current guides and recorded score/state context when interpreting it.
